@@ -293,18 +293,6 @@ export default function DamageAssessment({
         timestamp: new Date().toISOString(),
       };
 
-      try {
-        const r = await fetch(`${apiURL}/api/claims/add`, {
-          method: "POST",
-          body: result,
-        });
-        const res = await r.json();
-
-        if (res.success) t.success(res.success);
-      } catch (error) {
-        t.error(error.message);
-      }
-
       // Log the full assessment data to help with debugging
       console.log(
         "Assessment result:",
@@ -332,6 +320,18 @@ export default function DamageAssessment({
       // Store in localStorage
       localStorage.setItem("damageAssessmentResult", JSON.stringify(result));
       console.log(result);
+
+      try {
+        const r = await fetch(`${apiURL}/api/claims/add`, {
+          method: "POST",
+          body: result,
+        });
+        const res = await r.json();
+
+        if (res.success) t.success(res.success);
+      } catch (error) {
+        t.error(error.message);
+      }
 
       // Show toast notification based on claim status
       if (data.isFakeImage) {
