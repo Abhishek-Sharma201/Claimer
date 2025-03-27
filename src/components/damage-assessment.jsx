@@ -34,8 +34,8 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "../hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "../hooks/useAuth";
-import { apiURL } from "../constants";
 import { toast as t } from "react-toastify";
+import { apiURL } from "../constants";
 
 export default function DamageAssessment({
   userData,
@@ -331,7 +331,7 @@ export default function DamageAssessment({
 
       // Store in localStorage
       localStorage.setItem("damageAssessmentResult", JSON.stringify(result));
-      console.log(`From damage-assessment : ${result}`);
+      console.log(result);
 
       // Show toast notification based on claim status
       if (data.isFakeImage) {
