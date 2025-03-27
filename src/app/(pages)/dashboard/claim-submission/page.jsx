@@ -10,6 +10,7 @@ import DocumentExtractor from "@/src/components/document-extractor"
 import CarVerification from "@/src/components/car-verification"
 import HomeVerification from "@/src/components/home-verification"
 import DamageAssessment from "@/src/components/damage-assessment"
+import HomeDamageAssessment from "@/src/components/home-damage-assessment"
 
 export default function InsuranceApp() {
   // Application state
@@ -47,23 +48,24 @@ export default function InsuranceApp() {
                 const parsedVerificationResult = JSON.parse(storedVerificationResult)
                 setVerificationResult(parsedVerificationResult)
 
-                // Check if damage assessment exists (for car insurance only)
-                if (parsedDocData.documentType?.toLowerCase() !== "home") {
-                  const storedAssessmentResult = localStorage.getItem("damageAssessmentResult")
-                  if (storedAssessmentResult) {
-                    try {
-                      const parsedAssessmentResult = JSON.parse(storedAssessmentResult)
-                      setAssessmentResult(parsedAssessmentResult)
-                      setStep(5) // Move to completion step
-                    } catch (e) {
-                      console.error("Error parsing stored assessment result:", e)
-                      setStep(4) // Move to damage assessment step
-                    }
-                  } else {
+                // Check if damage assessment exists
+                const assessmentKey =
+                  parsedDocData.documentType?.toLowerCase() === "home"
+                    ? "homeDamageAssessmentResult"
+                    : "damageAssessmentResult"
+
+                const storedAssessmentResult = localStorage.getItem(assessmentKey)
+                if (storedAssessmentResult) {
+                  try {
+                    const parsedAssessmentResult = JSON.parse(storedAssessmentResult)
+                    setAssessmentResult(parsedAssessmentResult)
+                    setStep(5) // Move to completion step
+                  } catch (e) {
+                    console.error(`Error parsing stored ${assessmentKey}:`, e)
                     setStep(4) // Move to damage assessment step
                   }
                 } else {
-                  setStep(5) // Move to completion step for home insurance
+                  setStep(4) // Move to damage assessment step
                 }
               } catch (e) {
                 console.error("Error parsing stored verification result:", e)
@@ -94,14 +96,7 @@ export default function InsuranceApp() {
   // Handle verification completion
   const handleVerificationComplete = (result) => {
     setVerificationResult(result)
-
-    // For car insurance, proceed to damage assessment
-    // For home insurance, skip to completion
-    if (userData?.policyType?.toLowerCase() === "home") {
-      setStep(5) // Skip to completion for home insurance
-    } else {
-      setStep(4) // Go to damage assessment for car insurance
-    }
+    setStep(4) // Always go to damage assessment step for both car and home insurance
   }
 
   // Handle damage assessment completion
@@ -118,8 +113,11 @@ export default function InsuranceApp() {
     localStorage.removeItem("carVerificationResult")
     localStorage.removeItem("homeVerificationResult")
     localStorage.removeItem("carImageData")
+    localStorage.removeItem("homeImageData")
     localStorage.removeItem("damageImageData")
+    localStorage.removeItem("homeDamageImageData")
     localStorage.removeItem("damageAssessmentResult")
+    localStorage.removeItem("homeDamageAssessmentResult")
 
     // Reset state
     setUserData(null)
@@ -128,6 +126,10 @@ export default function InsuranceApp() {
     setAssessmentResult(null)
     setStep(1)
   }
+
+  // Determine if policy type is home
+  const isHomePolicy =
+    userData?.policyType?.toLowerCase() === "home" || extractedData?.documentType?.toLowerCase() === "home"
 
   // Render the appropriate step
   const renderStep = () => {
@@ -138,7 +140,7 @@ export default function InsuranceApp() {
         return <DocumentExtractor userData={userData} onDocumentProcessed={handleDocumentProcessed} />
       case 3:
         // Render different verification component based on policy type
-        if (userData?.policyType?.toLowerCase() === "home") {
+        if (isHomePolicy) {
           return (
             <HomeVerification
               userData={userData}
@@ -156,15 +158,26 @@ export default function InsuranceApp() {
           )
         }
       case 4:
-        // Damage assessment (car insurance only)
-        return (
-          <DamageAssessment
-            userData={userData}
-            extractedData={extractedData}
-            verificationResult={verificationResult}
-            onAssessmentComplete={handleAssessmentComplete}
-          />
-        )
+        // Render different damage assessment component based on policy type
+        if (isHomePolicy) {
+          return (
+            <HomeDamageAssessment
+              userData={userData}
+              extractedData={extractedData}
+              verificationResult={verificationResult}
+              onAssessmentComplete={handleAssessmentComplete}
+            />
+          )
+        } else {
+          return (
+            <DamageAssessment
+              userData={userData}
+              extractedData={extractedData}
+              verificationResult={verificationResult}
+              onAssessmentComplete={handleAssessmentComplete}
+            />
+          )
+        }
       case 5:
         return renderCompletionStep()
       default:
@@ -261,7 +274,7 @@ export default function InsuranceApp() {
                 <CardContent className="pt-6">
                   <div className="flex items-center space-x-2 mb-4">
                     <div className="bg-[#6B46C1]/20 p-2 rounded-full">
-                      {userData?.policyType?.toLowerCase() === "home" ? (
+                      {isHomePolicy ? (
                         <Home className="h-5 w-5 text-[#6B46C1]" />
                       ) : (
                         <Car className="h-5 w-5 text-[#6B46C1]" />
@@ -270,7 +283,7 @@ export default function InsuranceApp() {
                     <h4 className="font-medium text-white">Document Details</h4>
                   </div>
                   <div className="space-y-2">
-                    {userData?.policyType?.toLowerCase() === "home" ? (
+                    {isHomePolicy ? (
                       <>
                         <p className="text-sm">
                           <span className="text-gray-400">Property:</span>{" "}
@@ -316,11 +329,7 @@ export default function InsuranceApp() {
                     </h4>
                   </div>
                   <div className="space-y-2">
-                    {userData?.policyType?.toLowerCase() === "home" ? (
-                      <p className="text-sm">
-                        <span className="text-gray-400">Status:</span> <span className="text-[#00FFFF]">Verified</span>
-                      </p>
-                    ) : assessmentResult && !assessmentResult.skipped ? (
+                    {assessmentResult && !assessmentResult.skipped ? (
                       <>
                         <p className="text-sm">
                           <span className="text-gray-400">Damage Severity:</span>{" "}
@@ -358,6 +367,10 @@ export default function InsuranceApp() {
                           </p>
                         )}
                       </>
+                    ) : isHomePolicy ? (
+                      <p className="text-sm">
+                        <span className="text-gray-400">Status:</span> <span className="text-[#00FFFF]">Verified</span>
+                      </p>
                     ) : (
                       <>
                         <p className="text-sm">
@@ -392,15 +405,15 @@ export default function InsuranceApp() {
       {
         number: 3,
         label: "Verification",
-        icon:
-          userData?.policyType?.toLowerCase() === "home" ? <Home className="h-4 w-4" /> : <Car className="h-4 w-4" />,
+        icon: isHomePolicy ? <Home className="h-4 w-4" /> : <Car className="h-4 w-4" />,
       },
-      // Add damage assessment step for car insurance
-      ...(userData?.policyType?.toLowerCase() !== "home"
-        ? [{ number: 4, label: "Damage Assessment", icon: <Wrench className="h-4 w-4" /> }]
-        : []),
       {
-        number: userData?.policyType?.toLowerCase() === "home" ? 4 : 5,
+        number: 4,
+        label: "Damage Assessment",
+        icon: <Wrench className="h-4 w-4" />,
+      },
+      {
+        number: 5,
         label: "Complete",
         icon: <CheckCircle className="h-4 w-4" />,
       },
@@ -442,7 +455,7 @@ export default function InsuranceApp() {
             {userData && (
               <div className="flex items-center space-x-2">
                 <div className="bg-[#6B46C1]/20 p-2 rounded-full">
-                  {userData.policyType?.toLowerCase() === "home" ? (
+                  {isHomePolicy ? (
                     <Home className="h-5 w-5 text-[#6B46C1]" />
                   ) : (
                     <Car className="h-5 w-5 text-[#6B46C1]" />
