@@ -1,69 +1,28 @@
-"use client";
+import Hero from "@/src/components/hero"
+import Navbar from "@/src/components/navbar"
+// import { SparklesCore } from "@/src/components/sparkles"
 
-import React, { useState } from "react";
-import { toast } from "react-toastify";
-import { useAuth } from "@/src/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-
-const Page = () => {
-  const router = useRouter();
-  const { logout, isAuthenticated, user, loading } = useAuth();
-
-  const handleLogout = async () => {
-    const response = await logout();
-    if (response.success) {
-      toast.success("Logout successful!");
-      router.push("/login");
-    } else {
-      toast.error(response.message);
-    }
-  };
-
-  if (loading) {
-    return (
-      <main className="h-screen w-full flex flex-col items-center justify-center">
-        <p>Loading...</p>
-      </main>
-    );
-  }
-
+export default function Home() {
   return (
-    <main className="h-screen w-full flex flex-col items-center justify-center gap-8">
-      {isAuthenticated ? (
-        <Image
-          src={user?.picture}
-          height={100}
-          width={100}
-          alt="proPic"
-          className=" rounded-full "
-        />
-      ) : (
-        ""
-      )}
+    <main className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
+      {/* Ambient background with moving particles */}
+      <div className="h-full w-full absolute inset-0 z-0">
+        {/* <SparklesCore
+          id="tsparticlesfullpage"
+          background="transparent"
+          minSize={0.6}
+          maxSize={1.4}
+          particleDensity={100}
+          className="w-full h-full"
+          particleColor="#FFFFFF"
+        /> */}
+      </div>
 
-      <h1>
-        {isAuthenticated ? `Welcome, ${user?.email}` : "You must log in first."}
-      </h1>
-
-      {isAuthenticated ? (
-        <button
-          className="rounded-md border border-zinc-700 hover:bg-zinc-800 text-[.8rem] px-4 py-2 bg-zinc-900"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-      ) : (
-        <Link
-          className="rounded-md border border-zinc-700 hover:bg-zinc-800 text-[.8rem] px-4 py-2 bg-zinc-900"
-          href={"/login"}
-        >
-          Login
-        </Link>
-      )}
+      <div className="relative z-10">
+        <Navbar />
+        <Hero />
+      </div>
     </main>
-  );
-};
+  )
+}
 
-export default Page;
