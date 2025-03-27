@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { Button } from "@/src/components/ui/button"
-import { Bot, Menu } from "lucide-react"
-import { motion } from "framer-motion"
-import Link from "next/link"
+import { Button } from "@/src/components/ui/button";
+import { Bot, Menu } from "lucide-react";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -14,7 +14,7 @@ export default function Navbar() {
     >
       <Link href="/" className="flex items-center space-x-2">
         <Bot className="w-8 h-8 text-purple-500" />
-        <span className="text-white font-medium text-xl"></span>
+        <span className="text-white font-medium text-xl"> Bima.ai </span>
       </Link>
 
       {/* <div className="hidden md:flex items-center space-x-8">
@@ -24,26 +24,33 @@ export default function Navbar() {
         <NavLink href="/pricing">Pricing</NavLink>
       </div> */}
 
-      <div className="hidden md:flex items-center space-x-4">
-        <Button variant="ghost" className="text-white hover:text-purple-400">
+      <div className="hidden md:flex rounded-full items-center space-x-4">
+        <Button variant="ghost" className="text-white rounded-full hover:text-purple-400">
           Sign In
         </Button>
-        <Button className="bg-purple-600 hover:bg-purple-700 text-white">Get Started</Button>
+        <Button className="bg-purple-600 rounded-8xl hover:bg-purple-700 text-white">
+          Sign Up
+        </Button>
       </div>
 
-      <Button variant="ghost" size="icon" className="md:hidden text-white">
-        <Menu className="w-6 h-6" />
+      <Button variant="ghost" size="icon" className="md:hidden ml-80 rounded-8xl text-white">
+        Sign In
+      </Button>
+      <Button variant="ghost" size="icon" className="md:hidden rounded-8xl bg-purple-600 hover:bg-purple-700 text-white">
+        Sign Up
       </Button>
     </motion.nav>
-  )
+  );
 }
 
 function NavLink({ href, children }) {
   return (
-    <Link href={href} className="text-gray-300 hover:text-white transition-colors relative group">
+    <Link
+      href={href}
+      className="text-gray-300 hover:text-white transition-colors relative group"
+    >
       {children}
       <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-500 transition-all group-hover:w-full" />
     </Link>
-  )
+  );
 }
-
