@@ -3,6 +3,7 @@ import { FaStar, FaMapMarkerAlt, FaPhone, FaDirections } from "react-icons/fa"
 import { motion } from "framer-motion"
 
 const ShopCard = ({ shop }) => {
+  
   return (
     <motion.div
       className="shop-card"
