@@ -2,76 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { FaSearch, FaFilePdf, FaQuestionCircle } from "react-icons/fa";
-import { useAuth } from "../hooks/useAuth";
-import { apiURL } from "../constants";
-import { toast } from "react-toastify";
 
-const ClaimHistory = () => {
-  const { user } = useAuth();
-  const [claims, setClaims] = useState([]);
-
-  const fetchClaimHistory = async () => {
-    try {
-      const fe = await fetch(`${apiURL}/api/claims/get/${user._id}`, {
-        method: "GET",
-      });
-      const data = await fe.json();
-      setClaims(data.claims);
-      console.log(`Data : ${data}`);
-      console.log(`Claim history : ${claims}`);
-      toast.success(data.message);
-    } catch (error) {
-      toast.error(data.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchClaimHistory();
-  }, []);
-
-  // const claims = [
-  //   {
-  //     id: "CLM-2024-001",
-  //     type: "Auto Insurance",
-  //     status: "Approved",
-  //     amount: "$2,450.00",
-  //     submissionDate: "Jan 15, 2024",
-  //     lastUpdated: "Jan 20, 2024",
-  //   },
-  //   {
-  //     id: "CLM-2024-002",
-  //     type: "Health",
-  //     status: "In Progress",
-  //     amount: "$1,850.00",
-  //     submissionDate: "Jan 18, 2024",
-  //     lastUpdated: "Jan 22, 2024",
-  //   },
-  //   {
-  //     id: "CLM-2024-003",
-  //     type: "Home",
-  //     status: "Rejected",
-  //     amount: "$5,200.00",
-  //     submissionDate: "Jan 20, 2024",
-  //     lastUpdated: "Jan 23, 2024",
-  //   },
-  //   {
-  //     id: "CLM-2024-004",
-  //     type: "Auto Insurance",
-  //     status: "Approved",
-  //     amount: "$3,100.00",
-  //     submissionDate: "Jan 21, 2024",
-  //     lastUpdated: "Jan 24, 2024",
-  //   },
-  //   {
-  //     id: "CLM-2024-005",
-  //     type: "Health",
-  //     status: "In Progress",
-  //     amount: "$950.00",
-  //     submissionDate: "Jan 22, 2024",
-  //     lastUpdated: "Jan 25, 2024",
-  //   },
-  // ];
-
+const ClaimHistory = ({ claims }) => {
   const [hoveredRow, setHoveredRow] = useState(null);
 
   const getStatusColor = (status) => {
