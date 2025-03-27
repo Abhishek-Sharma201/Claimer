@@ -1,11 +1,8 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import App from "./app"
+"use client";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root"),
-)
+import React from "react";
+import App from "./app";
 
+export default function Page() {
+  return <App />;
+}

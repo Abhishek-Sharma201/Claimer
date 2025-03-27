@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import Header from "./components/Header"
-import HeroSection from "./components/HeroSection"
-import FilterSidebar from "./components/FilterSidebar"
-import RepairShopList from "./components/RepairShopList"
-import Map from "./components/Map"
+import Header from "@/src/components/repair-partners/Header"
+import HeroSection from "@/src/components/repair-partners/HeroSection"
+import FilterSidebar from "@/src/components/repair-partners/FilterSidebar"
+import RepairShopList from "@/src/components/repair-partners/RepairShopList"
+import Map from "@/src/components/repair-partners/Map"
 import "./styles.css"
 
 const App = () => {
