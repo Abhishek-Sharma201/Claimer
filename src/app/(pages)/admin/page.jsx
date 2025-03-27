@@ -41,11 +41,11 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen bg-black text-white p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold"> <span className='text-blue-400'> Admin</span> Dashboard</h1>
           <p className="text-gray-400">Welcome back, Admin</p>
         </div>
         <div className="flex items-center space-x-4">
@@ -53,25 +53,25 @@ const AdminDashboard = () => {
             <input
               type="text"
               placeholder="Search..."
-              className="bg-gray-800 text-white rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="bg-[#181818] text-white rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <FaSearch className="absolute left-3 top-3 text-gray-400" />
           </div>
-          <div className="relative">
+          {/* <div className="relative">
             <FaBell className="text-xl" />
             <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full px-1">2</span>
           </div>
           <div className="flex items-center space-x-2">
             <FaUserCircle className="text-2xl" />
             <span>Admin User</span>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Claims Overview */}
-        <div className="col-span-2 bg-gray-800 rounded-lg p-6">
+        <div className="col-span-2 bg-[#181818] rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Claims Overview</h2>
             <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded transition duration-300">
@@ -134,7 +134,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Fraud Alerts */}
-        <div className="bg-gray-800 rounded-lg p-6">
+        <div className="bg-[#181818] rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Fraud Alerts</h2>
             <span className="bg-red-500 text-xs rounded-full px-2 py-1">4 New</span>
@@ -146,7 +146,7 @@ const AdminDashboard = () => {
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2, duration: 0.5 }}
-                className="bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition duration-200"
+                className="bg-gray-800 p-4 rounded-lg hover:bg-gray-600 transition duration-200"
               >
                 <div className="flex items-center space-x-2">
                   <span className="text-red-500">⚠️</span>
@@ -160,7 +160,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Recent Users */}
-        <div className="bg-gray-800 rounded-lg p-6">
+        <div className="bg-[#181818] rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Recent Users</h2>
             <button className="text-purple-500 hover:underline">View All</button>
@@ -185,7 +185,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Policy Updates */}
-        <div className="bg-gray-800 rounded-lg p-6">
+        <div className="bg-[#181818] rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Policy Updates</h2>
             <button className="text-purple-500 hover:underline">View All</button>
@@ -197,7 +197,7 @@ const AdminDashboard = () => {
                 initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2, duration: 0.5 }}
-                className="bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition duration-200"
+                className="bg-gray-800 p-4 rounded-lg hover:bg-gray-600 transition duration-200"
               >
                 <h3 className="font-semibold">{policy.title}</h3>
                 <p
@@ -214,7 +214,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Notifications */}
-        <div className="bg-gray-800 rounded-lg p-6">
+        <div className="bg-[#181818] rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Notifications</h2>
             <span className="bg-red-500 text-xs rounded-full px-2 py-1">5 New</span>
@@ -226,7 +226,7 @@ const AdminDashboard = () => {
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2, duration: 0.5 }}
-                className="bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition duration-200"
+                className="bg-gray-800 p-4 rounded-lg hover:bg-gray-600 transition duration-200"
               >
                 <div className="flex items-center space-x-2">
                   <FaBell className="text-gray-400" />
