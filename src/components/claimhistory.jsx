@@ -100,17 +100,17 @@ const ClaimHistory = ({ claims }) => {
                 }`}
               >
                 <td className="p-4">{claim?._id}</td>
-                <td className="p-4">{claim?.claimType}</td>
+                <td className="p-4">{claim?.vehicleType}</td>
                 <td className="p-4">
                   <span
                     className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
-                      claim?.status
+                      claim?.claimStatus
                     )}`}
                   >
                     {claim?.status}
                   </span>
                 </td>
-                <td className="p-4">{claim?.amount}</td>
+                <td className="p-4">{claim?.coverageAmount}</td>
                 <td className="p-4">{claim?.submissionDate}</td>
                 <td className="p-4">{claim?.lastUpdated}</td>
                 <td className="p-4">
