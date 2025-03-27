@@ -20,7 +20,7 @@ const HeroSection = ({ onSearch }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="hero-title">Find Trusted Repair Partners with Ease</h1>
+        <h1 className="hero-title"> <span className="text-blue-400"> Find </span> Trusted <span></span> Repair Partners with Ease</h1>
         <p className="hero-subtitle">Locate the best certified repair centers for your vehicle</p>
 
         <form onSubmit={handleSubmit} className="location-search">
