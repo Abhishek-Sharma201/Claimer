@@ -76,7 +76,7 @@ const Cards = () => {
       </div>
 
       <footer className="mt-24 pt-8 border-t border-white/10 text-center animate-fade-in-delay-6">
-        <p className="text-slate-400">© 2025 BimaMarg. All rights reserved.</p>
+        <p className="text-slate-400">© 2025 DigiClaim.ai All rights reserved.</p>
         <div className="my-6 space-x-8">
           <a href="#" className="text-slate-400 hover:text-white transition-colors">Twitter</a>
           <a href="#" className="text-slate-400 hover:text-white transition-colors">LinkedIn</a>

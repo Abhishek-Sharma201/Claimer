@@ -138,12 +138,14 @@ const Page = () => {
         <p className="text-gray-400 mb-6">
           Browse, compare, and buy the best insurance policies hassle-free.
         </p>
-        <button
-          className="bg-gradient-to-r from-[#5b43ff] to-[#3b82f6] text-white font-medium 
-            py-3 px-8 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-        >
-          Explore Plans
-        </button>
+        <Link href="/insurance">
+      <button
+        className="bg-gradient-to-r from-[#5b43ff] to-[#3b82f6] text-white font-medium 
+          py-3 px-8 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+      >
+        Explore Plans
+      </button>
+    </Link>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ export default function Navbar() {
     >
       <Link href="/" className="flex items-center space-x-2">
         <Bot className="w-8 h-8 text-purple-500" />
-        <span className="text-white font-medium text-xl"> Bima.ai </span>
+        <span className="text-white font-medium text-xl"> DigiClaim.ai </span>
       </Link>
 
       <div className="hidden md:flex rounded-full items-center space-x-4">
