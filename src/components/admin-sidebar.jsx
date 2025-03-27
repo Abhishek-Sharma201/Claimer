@@ -16,12 +16,6 @@ import { toast } from "react-hot-toast"
 // Admin navigation items for DigiClaim.ai
 const navigationItems = [
   {
-    name: "Dashboard",
-    icon: "mdi:home",
-    color: "#6B46C1",
-    link: "/admin/dashboard",
-  },
-  {
     name: "Claims Management",
     icon: "mdi:file-document-multiple",
     color: "#6B46C1",

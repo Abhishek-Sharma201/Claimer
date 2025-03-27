@@ -29,14 +29,14 @@ export default function Home() {
   ]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen bg-black text-white p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div className="w-1/2">
           <input
             type="text"
             placeholder="Search claims, documents, or get help..."
-            className="w-full p-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+            className="w-full p-3 rounded-lg bg-[#181818] text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
           />
         </div>
         <div className="flex items-center space-x-4">
@@ -47,11 +47,11 @@ export default function Home() {
             </svg>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
+            {/* <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
             <div>
               <p className="text-sm">Ritik Ray</p>
               <p className="text-xs text-gray-400">ritikray@gmail.com</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

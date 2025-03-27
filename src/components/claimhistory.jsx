@@ -20,11 +20,14 @@ const ClaimHistory = ({ claims }) => {
   };
 
   return (
-    <div className="flex-1 p-8 bg-gray-800 text-white">
+    <div className="flex-1 p-8 bg-black text-white">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-2xl font-bold">Claim History</h2>
+          <h2 className="text-2xl font-bold">
+            <span className="text-blue-400"> Claim </span>
+            History
+          </h2>
           <p className="text-gray-400">View and manage your insurance claims</p>
         </div>
         <div className="flex items-center space-x-4">
@@ -33,10 +36,10 @@ const ClaimHistory = ({ claims }) => {
             <input
               type="text"
               placeholder="Search claims, docs, or get help..."
-              className="pl-10 p-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+              className="pl-10 p-2 rounded-lg bg-[#181818] text-green-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
             />
           </div>
-          <div className="flex items-center space-x-2">
+          {/* <div className="flex items-center space-x-2">
             <img
               src="/profile.jpg"
               alt="Profile"
@@ -44,29 +47,29 @@ const ClaimHistory = ({ claims }) => {
             />
             <span>Ritik Ray</span>
             <span className="text-gray-400">ritik.ray@gmail.com</span>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* Filters */}
       <div className="flex space-x-4 mb-6">
-        <select className="p-2 rounded-lg bg-gray-700 text-white focus:outline-none">
+        <select className="p-2 rounded-lg bg-[#181818] text-green-400 focus:outline-none">
           <option>All Claim Types</option>
           <option>Auto Insurance</option>
           <option>Health</option>
           <option>Home</option>
         </select>
-        <select className="p-2 rounded-lg bg-gray-700 text-white focus:outline-none">
+        <select className="p-2 rounded-lg bg-[#181818] text-green-400 focus:outline-none">
           <option>All Status</option>
           <option>Approved</option>
           <option>Pending</option>
           <option>Rejected</option>
         </select>
-        <select className="p-2 rounded-lg bg-gray-700 text-white focus:outline-none">
+        <select className="p-2 rounded-lg bg-[#181818] text-green-400 focus:outline-none">
           <option>Newest First</option>
           <option>Oldest First</option>
         </select>
-        <button className="flex items-center p-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors duration-300">
+        <button className="flex items-center p-2 bg-[#181818] text-green-400 rounded-lg hover:bg-gray-600 transition-colors duration-300">
           <FaFilePdf className="mr-2" />
           Export to PDF
         </button>
@@ -92,8 +95,8 @@ const ClaimHistory = ({ claims }) => {
                 key={index}
                 onMouseEnter={() => setHoveredRow(index)}
                 onMouseLeave={() => setHoveredRow(null)}
-                className={`border-t border-gray-700 transition-all duration-300 ${
-                  hoveredRow === index ? "bg-gray-700 transform scale-101" : ""
+                className={`border-t border-[#181818] transgreen-400-all duration-300 ${
+                  hoveredRow === index ? "bg-[#181818] transgreen-400scale-101" : ""
                 }`}
               >
                 <td className="p-4">{claim?._id}</td>

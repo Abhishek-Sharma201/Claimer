@@ -60,7 +60,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-8">
+    <div className="min-h-screen bg-black text-white flex flex-col items-center p-8">
       {/* Header */}
       <h1 className="text-4xl font-bold mb-2 animate-fadeIn">
         Find the Best Insurance Plan for You
