@@ -5,13 +5,25 @@ import { motion } from "framer-motion";
 import { FileText, Sparkles } from "lucide-react";
 import { FloatingPaper } from "@/src/components/floating-paper";
 import { RoboAnimation } from "@/src/components/robo-animation";
+import { Badge } from "@/src/components/ui/badge";
+import { Bot, Menu } from "lucide-react";
 
 export default function Hero() {
   return (
     <div className="relative min-h-[calc(100vh-76px)] flex items-center">
       {/* Floating papers background */}
       <div className="absolute inset-0 overflow-hidden">
-        <FloatingPaper count={6} />
+      <FloatingPaper 
+  count={5} 
+  images={[
+    "/images/paper1.png",
+    "/images/paper2.png",
+    "/images/paper3.png",
+    "/images/paper4.png",
+    "/images/paper5.png",
+  ]}
+/>
+
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -21,6 +33,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
+            <Badge variant="purple" className="mb-6 p-3 text-white">
+            <Bot className="w-8 h-8 text-purple-500" />Cipher Squad Present
+            </Badge>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
               Simplifying Insurance <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r font-pacifico from-purple-400 via-white to-purple-400">
