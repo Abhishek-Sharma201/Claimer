@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Header from "@/src/components/repair-partners/Header"
+// import Header from "@/src/components/repair-partners/Header"
 import HeroSection from "@/src/components/repair-partners/HeroSection"
 import FilterSidebar from "@/src/components/repair-partners/FilterSidebar"
 import RepairShopList from "@/src/components/repair-partners/RepairShopList"
@@ -23,10 +23,11 @@ const App = () => {
   })
 
   const [shops, setShops] = useState([
+    
     {
       id: 1,
       name: "AutoTech Solutions",
-      image: "/images/autotech.jpg",
+      image: "/images/FRAME.png",
       rating: 4.8,
       distance: 2.5,
       services: ["Repairs", "Maintenance", "Painting"],
@@ -35,7 +36,7 @@ const App = () => {
     {
       id: 2,
       name: "Elite Car Care",
-      image: "/images/elite-car.jpg",
+      image: "/images/FRAME(1).png",
       rating: 4.6,
       distance: 3.2,
       services: ["Denting", "Painting", "Service"],
@@ -44,7 +45,7 @@ const App = () => {
     {
       id: 3,
       name: "Pro Mechanics",
-      image: "/images/pro-mechanics.jpg",
+      image: "/images/FRAME(2).png",
       rating: 4.9,
       distance: 1.8,
       services: ["Repairs", "Electronics", "Towing"],
@@ -53,7 +54,7 @@ const App = () => {
     {
       id: 4,
       name: "Master Auto Works",
-      image: "/images/master-auto.jpg",
+      image: "/images/FRAME(3).png",
       rating: 4.7,
       distance: 4.1,
       services: ["Full Service", "Diagnostics", "Repairs"],
@@ -88,7 +89,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <Header />
+     
       <main className="main-content">
         <HeroSection onSearch={handleSearch} />
         <div className="content-container">
