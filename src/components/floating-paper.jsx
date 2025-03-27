@@ -49,7 +49,7 @@ export function FloatingPaper({ count = 5, images = [] }) {
             ease: "linear",
           }}
         >
-          <div className="relative w-16 h-20 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 flex items-center justify-center transform hover:scale-110 transition-transform overflow-hidden">
+          <div className="relative w-20 h-20 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 flex items-center justify-center transform hover:scale-110 transition-transform overflow-hidden">
             {images[i] ? (
               <img src={images[i]} alt={`Floating Image ${i + 1}`} className="w-full h-full object-cover rounded-lg" />
             ) : (

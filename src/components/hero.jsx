@@ -16,11 +16,11 @@ export default function Hero() {
       <FloatingPaper 
   count={5} 
   images={[
-    "/images/paper1.png",
-    "/images/paper2.png",
-    "/images/paper3.png",
-    "/images/paper4.png",
-    "/images/paper5.png",
+    "/images/1111.jpg",
+    "/images/2222.jpg",
+    "/images/3333.jpg",
+    "/images/4444.jpg",
+    "/images/5555.jpg",
   ]}
 />
 

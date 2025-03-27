@@ -1,5 +1,6 @@
 import Hero from "@/src/components/hero"
 import Navbar from "@/src/components/navbar"
+import Cards from "../components/cards"
 // import { SparklesCore } from "@/src/components/sparkles"
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
       <div className="relative z-10">
         <Navbar />
         <Hero />
+        <Cards />
       </div>
     </main>
   )
