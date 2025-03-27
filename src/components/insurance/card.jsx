@@ -34,7 +34,7 @@ const Card = ({ plan }) => {
         ))}
       </ul>
       <div className="mt-6 flex justify-between items-center">
-        <span className="text-2xl pr-3 font-bold">${plan.price}/month</span>
+        <span className="text-2xl pr-3 font-bold">₹{plan.price}/month</span>
         <button className="bg-purple-600 px-4 py-2 rounded-full hover:bg-purple-700 transition-colors duration-300">
           View Details
         </button>

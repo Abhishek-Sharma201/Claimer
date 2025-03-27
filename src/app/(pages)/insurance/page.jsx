@@ -14,37 +14,37 @@ const App = () => {
       title: 'Auto Premium',
       rating: 5,
       features: ['24/7 Roadside Assistance', 'Zero Depreciation Cover', 'Personal Accident Cover'],
-      price: 299,
+      price: 2990,
     },
     {
       title: 'Home Shield Plus',
       rating: 4,
       features: ['Natural Disaster Coverage', 'Theft Protection', 'Property Damage'],
-      price: 199,
+      price: 1990,
     },
     {
       title: 'Health Elite',
       rating: 4,
       features: ['Comprehensive Coverage', 'Global Treatment', 'Family Floater'],
-      price: 339,
+      price: 3390,
     },
     {
       title: 'Travel Secure',
       rating: 5,
       features: ['Global Coverage', 'Emergency Medical', 'Trip Cancellation'],
-      price: 149,
+      price: 1490,
     },
     {
       title: 'Life Assure',
       rating: 5,
       features: ['Term Life Coverage', 'Critical Illness', 'Investment Benefits'],
-      price: 499,
+      price: 4990,
     },
     {
       title: 'Family Health Plus',
       rating: 4,
       features: ['Family Coverage', 'Maternity Benefits', 'Annual Check-ups'],
-      price: 599,
+      price: 5990,
     },
   ];
 

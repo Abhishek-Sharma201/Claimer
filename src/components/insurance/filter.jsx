@@ -19,15 +19,15 @@ const Filter = () => {
       </select>
       <select className="bg-gray-800 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300">
         <option>Price Range</option>
-        <option>$100 - $300</option>
-        <option>$300 - $500</option>
-        <option>$500+</option>
+        <option>₹100 - ₹300</option>
+        <option>₹300 - ₹500</option>
+        <option>₹500+</option>
       </select>
       <select className="bg-gray-800 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300">
         <option>Coverage Amount</option>
-        <option>$10,000</option>
-        <option>$50,000</option>
-        <option>$100,000</option>
+        <option>₹10,000</option>
+        <option>₹50,000</option>
+        <option>₹100,000</option>
       </select>
       <select className="bg-gray-800 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300">
         <option>Sort By</option>
