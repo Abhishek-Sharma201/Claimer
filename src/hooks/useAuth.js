@@ -4,9 +4,6 @@
 
 import { useEffect, useState } from "react";
 import { apiURL } from "../constants";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
