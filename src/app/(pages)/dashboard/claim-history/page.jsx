@@ -1,9 +1,10 @@
-import React from 'react'
+"use client";
+import ClaimHistory from "@/src/components/ClaimHistory"; // Ensure correct casing
 
-const page = () => {
+export default function Home() {
   return (
-    <div>page</div>
-  )
+    <div className="flex h-screen bg-gray-800">
+      <ClaimHistory />
+    </div>
+  );
 }
-
-export default page

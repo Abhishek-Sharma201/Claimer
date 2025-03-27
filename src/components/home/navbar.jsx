@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/src/components/ui/button";
-import { Bot, Menu } from "lucide-react";
+import { Bot } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -17,40 +17,31 @@ export default function Navbar() {
         <span className="text-white font-medium text-xl"> Bima.ai </span>
       </Link>
 
-      {/* <div className="hidden md:flex items-center space-x-8">
-        <NavLink href="/features">Features</NavLink>
-        <NavLink href="/how-it-works">How it Works</NavLink>
-        <NavLink href="/examples">Examples</NavLink>
-        <NavLink href="/pricing">Pricing</NavLink>
-      </div> */}
-
       <div className="hidden md:flex rounded-full items-center space-x-4">
-        <Button variant="ghost" className="text-white rounded-full hover:text-purple-400">
-          Sign In
-        </Button>
-        <Button className="bg-purple-600 rounded-8xl hover:bg-purple-700 text-white">
-          Sign Up
-        </Button>
+        <Link href="/login">
+          <Button variant="ghost" className="text-white rounded-full hover:text-purple-400">
+            Sign In
+          </Button>
+        </Link>
+        <Link href="/signup">
+          <Button className="bg-purple-600 rounded-8xl hover:bg-purple-700 text-white">
+            Sign Up
+          </Button>
+        </Link>
       </div>
 
-      <Button variant="ghost" size="icon" className="md:hidden ml-80 rounded-8xl text-white">
-        Sign In
-      </Button>
-      <Button variant="ghost" size="icon" className="md:hidden rounded-8xl bg-purple-600 hover:bg-purple-700 text-white">
-        Sign Up
-      </Button>
+      <div className="md:hidden flex space-x-2">
+        <Link href="/login">
+          <Button variant="ghost" size="icon" className="rounded-8xl text-white">
+            Sign In
+          </Button>
+        </Link>
+        <Link href="/signup">
+          <Button variant="ghost" size="icon" className="bg-purple-600 hover:bg-purple-700 text-white">
+            Sign Up
+          </Button>
+        </Link>
+      </div>
     </motion.nav>
-  );
-}
-
-function NavLink({ href, children }) {
-  return (
-    <Link
-      href={href}
-      className="text-gray-300 hover:text-white transition-colors relative group"
-    >
-      {children}
-      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-500 transition-all group-hover:w-full" />
-    </Link>
   );
 }
