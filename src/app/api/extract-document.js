@@ -1,76 +1,265 @@
+import { NextResponse } from "next/server"
 
-// src/pages/api/extract-document.ts
-import  { NextApiRequest, NextApiResponse } from 'next';
-import formidable from 'formidable';
-import fs from 'fs';
-import pdf from 'pdf-parse';
+// OCR.space API key - you should move this to an environment variable
+const OCR_API_KEY = "K81455055988957" // Free API key for testing
 
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
+export async function POST(request) {
+  try {
+    const formData = await request.formData()
+    const file = formData.get("document")
+    const policyType = formData.get("policyType") || "Car" // Default to Car if not specified
 
-export default async function handler(
-  req, 
-  res
-) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
-  }
-
-  const form = new formidable.IncomingForm();
-
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      return res.status(500).json({ error: 'File upload failed' });
+    if (!file) {
+      return NextResponse.json({ error: "No file provided" }, { status: 400 })
     }
 
-    try {
-      const file = files.file;
-      const fileBuffer = fs.readFileSync(file.filepath);
+    // Convert file to buffer
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
 
-      // Parse PDF content
-      const pdfData = await pdf(fileBuffer);
-      const textContent = pdfData.text;
+    // Extract text using OCR.space API
+    const extractedText = await extractTextWithOCR(buffer, file.name)
 
-      // Basic text parsing (you'd replace this with more sophisticated extraction)
-      const extractedData = {
-        name: extractField(textContent, 'Name:'),
-        email: extractField(textContent, 'Email:'),
-        carColor: extractField(textContent, 'Car Color:'),
-        numberPlate: extractField(textContent, 'Number Plate:'),
-        policyNumber: extractField(textContent, 'Policy Number:'),
-        policyType: extractField(textContent, 'Policy Type:'),
-        coverageIncludes: extractListField(textContent, 'Coverage Includes:'),
-        policyStartDate: extractField(textContent, 'Policy Start Date:'),
-        policyEndDate: extractField(textContent, 'Policy End Date:'),
-        premiumAmount: extractField(textContent, 'Premium Amount:')
-      };
-
-      res.status(200).json(extractedData);
-    } catch (error) {
-      console.error('Document extraction error:', error);
-      res.status(500).json({ 
-        error: 'Document extraction failed',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      });
+    // Process the extracted text based on policy type
+    let extractedData
+    if (policyType.toLowerCase() === "home") {
+      extractedData = extractHomeInsuranceData(extractedText)
+    } else {
+      extractedData = extractCarInsuranceData(extractedText)
     }
-  });
+
+    // Log the extracted data to server console
+    console.log(`Extracted ${policyType} insurance data:`, JSON.stringify(extractedData, null, 2))
+
+    return NextResponse.json(extractedData)
+  } catch (error) {
+    console.error("Error processing document:", error)
+    return NextResponse.json({ error: "Failed to process document: " + error.message }, { status: 500 })
+  }
 }
 
+// Function to extract text using OCR.space API
+async function extractTextWithOCR(fileBuffer, fileName) {
+  try {
+    // Create form data for OCR.space API
+    const formData = new FormData()
 
-// Utility functions for basic text extraction
-function extractField(text, label) {
-  const regex = new RegExp(`${label}\\s*(.+)`, 'i');
-  const match = text.match(regex);
-  return match ? match[1].trim() : '';
+    // Convert buffer to blob
+    const blob = new Blob([fileBuffer])
+    formData.append("file", blob, fileName)
+
+    // Set OCR.space API parameters
+    formData.append("apikey", OCR_API_KEY)
+    formData.append("language", "eng")
+    formData.append("isOverlayRequired", "false")
+    formData.append("iscreatesearchablepdf", "false")
+    formData.append("issearchablepdfhidetextlayer", "false")
+
+    // Call OCR.space API
+    const response = await fetch("https://api.ocr.space/parse/image", {
+      method: "POST",
+      body: formData,
+    })
+
+    if (!response.ok) {
+      throw new Error(`OCR API error: ${response.status}`)
+    }
+
+    const result = await response.json()
+
+    if (result.IsErroredOnProcessing) {
+      throw new Error(`OCR processing error: ${result.ErrorMessage[0]}`)
+    }
+
+    // Extract text from OCR result
+    let extractedText = ""
+    if (result.ParsedResults && result.ParsedResults.length > 0) {
+      extractedText = result.ParsedResults[0].ParsedText
+    }
+
+    return extractedText
+  } catch (error) {
+    console.error("OCR extraction error:", error)
+    throw new Error("Failed to extract text from document: " + error.message)
+  }
 }
 
-function extractListField(text, label) {
-  const regex = new RegExp(`${label}\\s*(.+)`, 'i');
-  const match = text.match(regex);
-  return match 
-    ? match[1].split(',').map(item => item.trim()) 
-    : [];
+// Function to extract data from car insurance document
+function extractCarInsuranceData(text) {
+  // Extract data using regex patterns
+  const extractField = (pattern, defaultValue = "") => {
+    const match = text.match(pattern)
+    return match ? match[1].trim() : defaultValue
+  }
+
+  // Extract name
+  const name = extractField(/Name:?\s*([^\n]+)/i)
+
+  // Extract email
+  const email = extractField(/Email:?\s*([^\n]+)/i)
+
+  // Extract car color
+  const carColor = extractField(/Car\s*Color:?\s*([^\n]+)/i)
+
+  // Extract number plate
+  const numberPlate = extractField(/Number\s*Plate:?\s*([^\n]+)/i)
+
+  // Extract policy number
+  const policyNumber = extractField(/Policy\s*Number:?\s*([^\n]+)/i)
+
+  // Extract policy type
+  const policyType = extractField(/Policy\s*Type:?\s*([^\n]+)/i)
+
+  // Extract coverage includes
+  const coverageText = text.match(/Coverage\s*Includes:?\s*([\s\S]*?)(?=VALIDITY|$)/i)
+  const coverageIncludes = coverageText
+    ? coverageText[1]
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line && !line.includes("Coverage Includes:"))
+    : []
+
+  // Improved date extraction with validation and correction
+  let policyStartDate = extractField(/Policy\s*Start\s*Date:?\s*([^\n]+)/i)
+  let policyEndDate = extractField(/Policy\s*(?:End|Expiry)\s*Date:?\s*([^\n]+)/i)
+
+  // Fix common OCR errors in dates
+  policyStartDate = fixDateFormat(policyStartDate)
+  policyEndDate = fixDateFormat(policyEndDate)
+
+  // Extract premium amount
+  const premiumAmount = extractField(/Premium\s*Amount:?\s*([^\n]+)/i)
+
+  // Create the structured JSON data
+  return {
+    documentType: "Car",
+    name,
+    email,
+    carColor,
+    numberPlate,
+    policyNumber,
+    policyType,
+    coverageIncludes,
+    policyStartDate,
+    policyEndDate,
+    premiumAmount,
+  }
 }
+
+// Function to extract data from home insurance document
+function extractHomeInsuranceData(text) {
+  // Extract data using regex patterns
+  const extractField = (pattern, defaultValue = "") => {
+    const match = text.match(pattern)
+    return match ? match[1].trim() : defaultValue
+  }
+
+  // Extract name
+  const name = extractField(/Name:?\s*([^\n]+)/i)
+
+  // Extract email
+  const email = extractField(/Email:?\s*([^\n]+)/i)
+
+  // Extract policy number
+  const policyNumber = extractField(/Policy\s*Number:?\s*([^\n]+)/i)
+
+  // Extract policy type
+  const policyType = extractField(/Policy\s*Type:?\s*([^\n]+)/i)
+
+  // Extract property details
+  const propertyType = extractField(/Property\s*Type:?\s*([^\n]+)/i)
+  const constructionType = extractField(/Construction\s*Type:?\s*([^\n]+)/i)
+  const propertyLocation = extractField(/Property\s*Location:?\s*([^\n]+)/i)
+  const yearBuilt = extractField(/Year\s*Built:?\s*([^\n]+)/i)
+  const squareFootage = extractField(/Square\s*Footage:?\s*([^\n]+)/i)
+  const propertyValue = extractField(/Property\s*Value:?\s*([^\n]+)/i)
+
+  // Extract coverage includes
+  const coverageText = text.match(/Coverage\s*Includes:?\s*([\s\S]*?)(?=VALIDITY|$)/i)
+  const coverageIncludes = coverageText
+    ? coverageText[1]
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line && !line.includes("Coverage Includes:"))
+    : []
+
+  // Improved date extraction with validation and correction
+  let policyStartDate = extractField(/Policy\s*Start\s*Date:?\s*([^\n]+)/i)
+  let policyEndDate = extractField(/Policy\s*(?:End|Expiry)\s*Date:?\s*([^\n]+)/i)
+
+  // Fix common OCR errors in dates
+  policyStartDate = fixDateFormat(policyStartDate)
+  policyEndDate = fixDateFormat(policyEndDate)
+
+  // Extract coverage amount - FIX: Capture the full amount including currency and value
+  const coverageAmount = extractField(/Coverage\s*Amount:?\s*([^\n]+)/i)
+
+  // Create the structured JSON data
+  return {
+    documentType: "Home",
+    name,
+    email,
+    policyNumber,
+    policyType,
+    propertyType,
+    constructionType,
+    propertyLocation,
+    yearBuilt,
+    squareFootage,
+    propertyValue,
+    coverageIncludes,
+    policyStartDate,
+    policyEndDate,
+    coverageAmount,
+  }
+}
+
+// Helper function to fix common OCR errors in dates
+function fixDateFormat(dateStr) {
+  if (!dateStr) return ""
+
+  // Fix common OCR errors
+  let fixed = dateStr
+    .replace(/l44/gi, "14") // Fix OCR misreading 14 as l44
+    .replace(/l4/gi, "14") // Fix OCR misreading 14 as l4
+    .replace(/(\d+)4un/gi, "$1-Jun") // Fix "4un" to "-Jun"
+    .replace(/(\d+)un/gi, "$1-Jun") // Fix "un" to "-Jun"
+    .replace(/(\d+)[/.](\d+)[/.](\d+)/, "$1-$2-$3") // Standardize date separators
+    .replace(/(\d+)\s+([A-Za-z]+)\s*[-,]?\s*(\d+)/, "$1-$2-$3") // Format "15 Jun 2024" to "15-Jun-2024"
+
+  // Try to detect and fix date format
+  const datePattern = /(\d{1,2})[-\s]([A-Za-z]{3,})[-\s](\d{2,4})/i
+  const match = fixed.match(datePattern)
+
+  if (match) {
+    const day = match[1].padStart(2, "0")
+    let month = match[2]
+    const year = match[3].length === 2 ? `20${match[3]}` : match[3]
+
+    // Standardize month abbreviation
+    const months = {
+      jan: "Jan",
+      feb: "Feb",
+      mar: "Mar",
+      apr: "Apr",
+      may: "May",
+      jun: "Jun",
+      jul: "Jul",
+      aug: "Aug",
+      sep: "Sep",
+      oct: "Oct",
+      nov: "Nov",
+      dec: "Dec",
+    }
+
+    const monthLower = month.toLowerCase().substring(0, 3)
+    if (months[monthLower]) {
+      month = months[monthLower]
+    }
+
+    fixed = `${day}-${month}-${year}`
+  }
+
+  return fixed
+}
+

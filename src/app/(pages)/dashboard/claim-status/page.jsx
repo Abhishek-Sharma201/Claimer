@@ -1,8 +1,13 @@
+import ClaimStatus from '@/src/components/claim-status'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div>
+
+      <ClaimStatus/>
+
+    </div>
   )
 }
 
