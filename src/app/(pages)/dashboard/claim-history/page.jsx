@@ -2,6 +2,7 @@
 import ClaimHistory from "@/src/components/claimhistory"; // Ensure correct casing
 import { apiURL } from "@/src/constants";
 import { useAuth } from "@/src/hooks/useAuth";
+import { useState } from "react";
 
 export default function Home() {
   const { user } = useAuth();
