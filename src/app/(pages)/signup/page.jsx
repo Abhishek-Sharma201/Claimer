@@ -14,7 +14,8 @@ const Page = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    date: "",
+    policynumber: "",
+    dob: "",
     password: ""
   });
 
@@ -26,7 +27,6 @@ const Page = () => {
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -39,7 +39,8 @@ const Page = () => {
     const newErrors = {};
     if (!formData.name) newErrors.name = "Name is required";
     if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.date) newErrors.date = "Date of birth is required";
+    if (!formData.dob) newErrors.dob = "Date of birth is required";
+    if (!formData.policynumber) newErrors.policynumber = "Policy number is required";
     if (!formData.password) newErrors.password = "Password is required";
     
     setErrors(newErrors);
@@ -48,7 +49,8 @@ const Page = () => {
 
   const handleSignup = async () => {
     if (validateForm()) {
-      const response = await signup(formData.name, formData.email, formData.password);
+      console.log(formData);
+      const response = await signup(formData.name, formData.email, formData.policynumber, formData.password);
       if (response.success) {
         toast.success("Signup successful!");
         router.push("/login");
@@ -104,14 +106,29 @@ const Page = () => {
             <label className="text-sm text-zinc-400">Date of Birth</label>
             <input
               type="date"
-              name="date"
-              value={formData.date}
+              name="dob"
+              value={formData.dob}
               onChange={handleChange}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.date ? 'border-red-500' : 'border-zinc-700'} 
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.dob ? 'border-red-500' : 'border-zinc-700'} 
                 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300
                 text-zinc-300`}
             />
-            {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
+            {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm text-zinc-400">Policy Number</label>
+            <input
+              type="text"
+              name="policynumber"
+              value={formData.policynumber}
+              onChange={handleChange}
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.policynumber ? 'border-red-500' : 'border-zinc-700'} 
+                focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300
+                text-zinc-300`}
+              placeholder="Enter your policy number"
+            />
+            {errors.policynumber && <p className="text-red-500 text-xs mt-1">{errors.policynumber}</p>}
           </div>
 
           <div className="space-y-2">
