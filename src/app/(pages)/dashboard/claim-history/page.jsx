@@ -11,26 +11,23 @@ export default function Home() {
 
   const fetchClaimHistory = async () => {
     try {
-      const fe = await fetch(`${apiURL}/api/claims/get/${user?._id}`, {
+      const response = await fetch(`${apiURL}/api/claims/get/${user._id}`, {
         method: "GET",
       });
-
-      const data = await fe.json();
-
-      let json = JSON.stringify(data);
-
-      setClaims(json.claims);
-      console.log(`Data : ${json}`);
-      console.log(`Claim history : ${claims}`);
+      const data = await response.json();
+      setClaims(data.claims);
+      console.log("Data:", data);
       toast.success(data.message);
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  useEffect(async () => {
-    await fetchClaimHistory();
-  }, []);
+  useEffect(() => {
+    if (user && user._id) {
+      fetchClaimHistory();
+    }
+  }, [user]);
 
   return (
     <div className="flex h-screen bg-gray-800">
