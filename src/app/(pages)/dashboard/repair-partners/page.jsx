@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "./app"
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root"),
+)
 
-export default page
