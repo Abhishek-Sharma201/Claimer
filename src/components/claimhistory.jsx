@@ -27,7 +27,7 @@ const ClaimHistory = () => {
 
   useEffect(() => {
     fetchClaimHistory();
-  }, [claims]);
+  }, []);
 
   // const claims = [
   //   {
