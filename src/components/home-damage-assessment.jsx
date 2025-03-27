@@ -297,17 +297,17 @@ export default function HomeDamageAssessment({
         timestamp: new Date().toISOString(),
       };
 
-      try {
-        const r = await fetch(`${apiURL}/api/claims/add`, {
-          method: "POST",
-          body: result,
-        });
-        const res = await r.json();
+      // try {
+      //   const r = await fetch(`${apiURL}/api/claims/add`, {
+      //     method: "POST",
+      //     body: result,
+      //   });
+      //   const res = await r.json();
 
-        if (res.success) toast.success(res.message);
-      } catch (error) {
-        toast.error(error.message);
-      }
+      //   if (res.success) toast.success(res.message);
+      // } catch (error) {
+      //   toast.error(error.message);
+      // }
 
       // Log the full assessment data to help with debugging
       console.log(
