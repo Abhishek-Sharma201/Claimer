@@ -1,9 +1,12 @@
-import React from 'react'
+// import Sidebar from "@/src/components/support/sidebar"
+import MainContent from "@/src/components/support/main-content"
 
-const page = () => {
+export default function Home() {
   return (
-    <div>page</div>
+    <>
+      
+      <MainContent />
+    </>
   )
 }
 
-export default page
