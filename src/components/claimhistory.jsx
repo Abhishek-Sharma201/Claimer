@@ -155,7 +155,7 @@ const ClaimHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {claims.map((claim, index) => (
+            {claims?.map((claim, index) => (
               <tr
                 key={index}
                 onMouseEnter={() => setHoveredRow(index)}
@@ -164,20 +164,20 @@ const ClaimHistory = () => {
                   hoveredRow === index ? "bg-gray-700 transform scale-101" : ""
                 }`}
               >
-                <td className="p-4">{claim._id}</td>
-                <td className="p-4">{claim.claimType}</td>
+                <td className="p-4">{claim?._id}</td>
+                <td className="p-4">{claim?.claimType}</td>
                 <td className="p-4">
                   <span
                     className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
-                      claim.status
+                      claim?.status
                     )}`}
                   >
-                    {claim.status}
+                    {claim?.status}
                   </span>
                 </td>
-                <td className="p-4">{claim.amount}</td>
-                <td className="p-4">{claim.submissionDate}</td>
-                <td className="p-4">{claim.lastUpdated}</td>
+                <td className="p-4">{claim?.amount}</td>
+                <td className="p-4">{claim?.submissionDate}</td>
+                <td className="p-4">{claim?.lastUpdated}</td>
                 <td className="p-4">
                   <button className="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-500 transition-colors duration-300">
                     View Details
