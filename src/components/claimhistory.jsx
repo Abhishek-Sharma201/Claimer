@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { FaSearch, FaFilePdf, FaQuestionCircle } from "react-icons/fa";
 import { useAuth } from "../hooks/useAuth";
 import { apiURL } from "../constants";
@@ -20,6 +22,10 @@ const ClaimHistory = () => {
       toast.error(data.message);
     }
   };
+
+  useEffect(() => {
+    fetchClaimHistory();
+  }, [claims]);
 
   // const claims = [
   //   {
