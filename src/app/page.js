@@ -19,7 +19,7 @@ export default function Home() {
         /> */}
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 bg-[url('/bg.png')]">
         <Navbar />
         <Hero />
         <Cards />
