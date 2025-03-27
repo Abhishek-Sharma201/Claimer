@@ -14,9 +14,13 @@ export default function Home() {
       const fe = await fetch(`${apiURL}/api/claims/get/${user?._id}`, {
         method: "GET",
       });
+
       const data = await fe.json();
-      setClaims(data.claims);
-      console.log(`Data : ${data}`);
+
+      let json = JSON.stringify(data);
+
+      setClaims(json.claims);
+      console.log(`Data : ${json}`);
       console.log(`Claim history : ${claims}`);
       toast.success(data.message);
     } catch (error) {
