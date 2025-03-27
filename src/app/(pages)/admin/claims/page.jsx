@@ -1,8 +1,13 @@
+import ClaimsManagementAllInOne from '@/src/components/admin/claim-management'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div>
+
+    <ClaimsManagementAllInOne/>
+
+    </div>
   )
 }
 
