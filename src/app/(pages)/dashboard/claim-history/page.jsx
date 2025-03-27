@@ -3,6 +3,7 @@ import ClaimHistory from "@/src/components/claimhistory"; // Ensure correct casi
 import { apiURL } from "@/src/constants";
 import { useAuth } from "@/src/hooks/useAuth";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const { user } = useAuth();
@@ -19,12 +20,12 @@ export default function Home() {
       console.log(`Claim history : ${claims}`);
       toast.success(data.message);
     } catch (error) {
-      toast.error(data.message);
+      toast.error(error.message);
     }
   };
 
-  useEffect(() => {
-    fetchClaimHistory();
+  useEffect(async () => {
+    await fetchClaimHistory();
   }, []);
 
   return (
