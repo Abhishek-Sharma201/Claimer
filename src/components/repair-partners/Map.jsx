@@ -6,46 +6,43 @@ const Map = ({ shops }) => {
   const mapRef = useRef(null)
 
   useEffect(() => {
-    // In a real application, you would use a mapping library like Google Maps or Mapbox
-    // This is a placeholder for demonstration purposes
-    const canvas = mapRef.current
-    if (!canvas) return
+    const loadGoogleMaps = async () => {
+      if (!window.google) {
+        const script = document.createElement("script")
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAY6uMSweEcpvuAWafg6FfKQzmcKW0B5lc&libraries=places`
+        script.async = true
+        script.defer = true
+        document.head.appendChild(script)
 
-    const ctx = canvas.getContext("2d")
+        script.onload = () => {
+          initMap()
+        }
+      } else {
+        initMap()
+      }
+    }
 
-    // Draw a simple map background
-    ctx.fillStyle = "#e5e7eb"
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    const initMap = () => {
+      if (!mapRef.current) return
 
-    // Draw some map features
-    ctx.fillStyle = "#d1d5db"
-    ctx.fillRect(50, 30, 200, 10)
-    ctx.fillRect(100, 70, 150, 15)
-    ctx.fillRect(30, 120, 100, 12)
-    ctx.fillRect(180, 150, 120, 10)
+      const map = new google.maps.Map(mapRef.current, {
+        center: { lat: shops[0]?.lat || 19.076, lng: shops[0]?.lng || 72.877 },
+        zoom: 12,
+      })
 
-    // Draw shop markers
-    shops.forEach((shop, index) => {
-      const x = 50 + index * 70
-      const y = 80 + index * 50
+      shops.forEach((shop) => {
+        new google.maps.Marker({
+          position: { lat: shop.lat, lng: shop.lng },
+          map,
+          title: shop.name,
+        })
+      })
+    }
 
-      ctx.beginPath()
-      ctx.arc(x, y, 8, 0, 2 * Math.PI)
-      ctx.fillStyle = "#7c3aed"
-      ctx.fill()
-
-      ctx.font = "12px Arial"
-      ctx.fillStyle = "#1f2937"
-      ctx.fillText(shop.name, x - 30, y + 20)
-    })
+    loadGoogleMaps()
   }, [shops])
 
-  return (
-    <div className="map-container">
-      <canvas ref={mapRef} width="400" height="600" className="map-canvas"></canvas>
-    </div>
-  )
+  return <div ref={mapRef} className="w-[400px] h-[600px]" />
 }
 
 export default Map
-
