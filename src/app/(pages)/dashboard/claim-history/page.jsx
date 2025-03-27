@@ -11,7 +11,7 @@ export default function Home() {
 
   const fetchClaimHistory = async () => {
     try {
-      const fe = await fetch(`${apiURL}/api/claims/get/${user._id}`, {
+      const fe = await fetch(`${apiURL}/api/claims/get/${user?._id}`, {
         method: "GET",
       });
       const data = await fe.json();
