@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Icon } from "@iconify/react"
-import { cn } from "@/lib/utils"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
-import { useRouter, usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { LogOut, ChevronLeft, Search } from "lucide-react"
-import { toast } from "react-hot-toast"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Icon } from "@iconify/react";
+import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import { useRouter, usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { LogOut, ChevronLeft, Search } from "lucide-react";
+import { toast } from "react-hot-toast";
+import { useAuth } from "../hooks/useAuth";
 
 // Updated navigation items for DigiClaim.ai
 const navigationItems = [
@@ -56,93 +62,95 @@ const navigationItems = [
     color: "#6B46C1",
     link: "/dashboard/support",
   },
-]
+];
 
 export function EnhancedSidebar({ user, onExpandChange, setToggleFunction }) {
-  const [isExpanded, setIsExpanded] = useState(true)
-  const [activeItem, setActiveItem] = useState(null)
-  const [hoveredItem, setHoveredItem] = useState(null)
-  const [searchQuery, setSearchQuery] = useState("")
-  const router = useRouter()
-  const pathname = usePathname()
-  const { logout } = useState(null)
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [activeItem, setActiveItem] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+  const pathname = usePathname();
+  const { logout } = useAuth();
 
   // Function to check if a path is active
   const isPathActive = (path) => {
-    if (!pathname) return false
-    return pathname === path || pathname.startsWith(`${path}/`)
-  }
+    if (!pathname) return false;
+    return pathname === path || pathname.startsWith(`${path}/`);
+  };
 
   // Initialize active items based on current path
   useEffect(() => {
-    if (!pathname) return
+    if (!pathname) return;
 
     // Find which navigation item matches the current path
     for (const item of navigationItems) {
       if (item.link && isPathActive(item.link)) {
-        setActiveItem(item.name)
-        return
+        setActiveItem(item.name);
+        return;
       }
     }
-  }, [pathname])
+  }, [pathname]);
 
   const handleLogout = async () => {
-    const response = await logout()
+    const response = await logout();
     if (response?.success) {
-      toast.success("Logout successful!")
-      router.push("/login")
+      toast.success("Logout successful!");
+      router.push("/login");
     } else {
-      toast.error(response?.message || "Logout failed")
+      toast.error(response?.message || "Logout failed");
     }
-  }
+  };
 
   // Handle clicking on a menu item
   const handleItemClick = (item, event) => {
     if (!isExpanded) {
-      setIsExpanded(true)
+      setIsExpanded(true);
     }
 
     if (item.link) {
-      router.push(item.link)
+      router.push(item.link);
     }
-  }
+  };
 
   const toggleSidebar = () => {
-    setIsExpanded((prev) => !prev)
-    onExpandChange(!isExpanded)
-  }
+    setIsExpanded((prev) => !prev);
+    onExpandChange(!isExpanded);
+  };
 
   useEffect(() => {
     if (setToggleFunction) {
-      setToggleFunction(toggleSidebar)
+      setToggleFunction(toggleSidebar);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setIsExpanded(false)
-        onExpandChange(false)
+        setIsExpanded(false);
+        onExpandChange(false);
       } else {
-        setIsExpanded(true)
-        onExpandChange(true)
+        setIsExpanded(true);
+        onExpandChange(true);
       }
-    }
+    };
 
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [onExpandChange])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [onExpandChange]);
 
   // Filter navigation items based on search query
   const filteredItems = searchQuery
-    ? navigationItems.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    : navigationItems
+    ? navigationItems.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : navigationItems;
 
   return (
     <motion.div
       className={cn(
         "fixed left-0 top-0 h-screen bg-[#111111] text-white transition-all duration-300 ease-in-out z-50 border-r border-[#2a2a2a]",
-        isExpanded ? "w-64" : "w-16",
+        isExpanded ? "w-64" : "w-16"
       )}
       animate={{
         width: isExpanded ? 256 : 64,
@@ -173,8 +181,12 @@ export function EnhancedSidebar({ user, onExpandChange, setToggleFunction }) {
                 transition={{ duration: 0.3 }}
                 className="ml-3"
               >
-                <p className="text-sm font-medium text-white">{user?.name || "User"}</p>
-                <p className="text-xs text-[#9ca3af]">{user?.email || "user@example.com"}</p>
+                <p className="text-sm font-medium text-white">
+                  {user?.name || "User"}
+                </p>
+                <p className="text-xs text-[#9ca3af]">
+                  {user?.email || "user@example.com"}
+                </p>
               </motion.div>
             )}
           </div>
@@ -220,8 +232,8 @@ export function EnhancedSidebar({ user, onExpandChange, setToggleFunction }) {
                           activeItem === item.name
                             ? "bg-[#1a1a1a] text-white border-l-2 border-l-[#6B46C1]"
                             : hoveredItem === item.name
-                              ? "bg-[#1a1a1a] text-white"
-                              : "text-[#9ca3af] hover:bg-[#1a1a1a] hover:text-white",
+                            ? "bg-[#1a1a1a] text-white"
+                            : "text-[#9ca3af] hover:bg-[#1a1a1a] hover:text-white"
                         )}
                         onClick={(e) => handleItemClick(item, e)}
                         onHoverStart={() => setHoveredItem(item.name)}
@@ -232,23 +244,38 @@ export function EnhancedSidebar({ user, onExpandChange, setToggleFunction }) {
                         <div
                           className={cn(
                             "flex items-center justify-center w-8 h-8 rounded-lg mr-3",
-                            activeItem === item.name ? "bg-gradient-to-br from-[#6B46C1] to-[#6B46C1]/70" : "",
+                            activeItem === item.name
+                              ? "bg-gradient-to-br from-[#6B46C1] to-[#6B46C1]/70"
+                              : ""
                           )}
                         >
                           <Icon
                             icon={item.icon}
-                            className={cn("w-5 h-5 transition-transform", activeItem === item.name ? "scale-110" : "")}
+                            className={cn(
+                              "w-5 h-5 transition-transform",
+                              activeItem === item.name ? "scale-110" : ""
+                            )}
                             style={{
-                              color: activeItem === item.name ? "#00FFFF" : "#FFFFFF",
+                              color:
+                                activeItem === item.name
+                                  ? "#00FFFF"
+                                  : "#FFFFFF",
                             }}
                           />
                         </div>
-                        {isExpanded && <span className="text-sm flex-1 font-medium">{item.name}</span>}
+                        {isExpanded && (
+                          <span className="text-sm flex-1 font-medium">
+                            {item.name}
+                          </span>
+                        )}
                       </motion.div>
                     </div>
                   </TooltipTrigger>
                   {!isExpanded && (
-                    <TooltipContent side="right" className="bg-[#1a1a1a] text-white border border-[#2a2a2a]">
+                    <TooltipContent
+                      side="right"
+                      className="bg-[#1a1a1a] text-white border border-[#2a2a2a]"
+                    >
                       {item.name}
                     </TooltipContent>
                   )}
@@ -270,12 +297,13 @@ export function EnhancedSidebar({ user, onExpandChange, setToggleFunction }) {
               onClick={handleLogout}
             >
               <LogOut className="mr-2 h-4 w-4" />
-              {isExpanded && <span className="text-sm font-medium">Logout</span>}
+              {isExpanded && (
+                <span className="text-sm font-medium">Logout</span>
+              )}
             </Button>
           </motion.div>
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
-

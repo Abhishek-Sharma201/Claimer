@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Bot } from 'lucide-react';
+import { Bot } from "lucide-react";
 
 const Page = () => {
   const { signup } = useAuth();
@@ -16,21 +16,21 @@ const Page = () => {
     email: "",
     policynumber: "",
     dob: "",
-    password: ""
+    password: "",
   });
 
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -40,9 +40,10 @@ const Page = () => {
     if (!formData.name) newErrors.name = "Name is required";
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.dob) newErrors.dob = "Date of birth is required";
-    if (!formData.policynumber) newErrors.policynumber = "Policy number is required";
+    if (!formData.policynumber)
+      newErrors.policynumber = "Policy number is required";
     if (!formData.password) newErrors.password = "Password is required";
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -50,7 +51,13 @@ const Page = () => {
   const handleSignup = async () => {
     if (validateForm()) {
       console.log(formData);
-      const response = await signup(formData.name, formData.email, formData.policynumber, formData.password);
+      const response = await signup(
+        formData.name,
+        formData.email,
+        formData.password,
+        formData.policynumber,
+        formData.dob
+      );
       if (response.success) {
         toast.success("Signup successful!");
         router.push("/login");
@@ -69,7 +76,9 @@ const Page = () => {
         </div>
 
         <h2 className="text-2xl font-bold text-center mb-2">Sign Up</h2>
-        <p className="text-zinc-400 text-center mb-8">Fill out the form to get started on your journey.</p>
+        <p className="text-zinc-400 text-center mb-8">
+          Fill out the form to get started on your journey.
+        </p>
 
         <div className="space-y-6">
           <div className="space-y-2">
@@ -79,12 +88,16 @@ const Page = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.name ? 'border-red-500' : 'border-zinc-700'} 
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
+                errors.name ? "border-red-500" : "border-zinc-700"
+              } 
                 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300
                 placeholder:text-zinc-500`}
               placeholder="Enter your name"
             />
-            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -94,12 +107,16 @@ const Page = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.email ? 'border-red-500' : 'border-zinc-700'} 
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
+                errors.email ? "border-red-500" : "border-zinc-700"
+              } 
                 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300
                 placeholder:text-zinc-500`}
               placeholder="Enter your email"
             />
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -109,11 +126,15 @@ const Page = () => {
               name="dob"
               value={formData.dob}
               onChange={handleChange}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.dob ? 'border-red-500' : 'border-zinc-700'} 
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
+                errors.dob ? "border-red-500" : "border-zinc-700"
+              } 
                 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300
                 text-zinc-300`}
             />
-            {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
+            {errors.dob && (
+              <p className="text-red-500 text-xs mt-1">{errors.dob}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -123,12 +144,16 @@ const Page = () => {
               name="policynumber"
               value={formData.policynumber}
               onChange={handleChange}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.policynumber ? 'border-red-500' : 'border-zinc-700'} 
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
+                errors.policynumber ? "border-red-500" : "border-zinc-700"
+              } 
                 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300
                 text-zinc-300`}
               placeholder="Enter your policy number"
             />
-            {errors.policynumber && <p className="text-red-500 text-xs mt-1">{errors.policynumber}</p>}
+            {errors.policynumber && (
+              <p className="text-red-500 text-xs mt-1">{errors.policynumber}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -138,12 +163,16 @@ const Page = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${errors.password ? 'border-red-500' : 'border-zinc-700'} 
+              className={`w-full px-4 py-3 rounded-lg bg-zinc-800/50 border ${
+                errors.password ? "border-red-500" : "border-zinc-700"
+              } 
                 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300
                 placeholder:text-zinc-500`}
               placeholder="Create a password"
             />
-            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+            )}
           </div>
 
           <button
@@ -157,7 +186,7 @@ const Page = () => {
 
           <div className="text-center text-sm text-zinc-400">
             Already have an account?{" "}
-            <Link 
+            <Link
               href="/login"
               className="text-purple-500 hover:text-purple-400 font-medium transition-colors duration-300"
             >

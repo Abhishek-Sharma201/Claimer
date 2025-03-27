@@ -6,7 +6,7 @@ import { useAuth } from "@/src/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { GoogleLogin } from "@react-oauth/google";
-import { Bot, Eye, EyeOff } from 'lucide-react';
+import { Bot, Eye, EyeOff } from "lucide-react";
 
 const Page = () => {
   const { login, googleLogin } = useAuth();
@@ -21,7 +21,7 @@ const Page = () => {
     const response = await login(email, password);
     if (response.success) {
       toast.success("Login successful!");
-      router.push("/");
+      router.push("/dashboard");
     } else {
       toast.error(response.message);
     }
@@ -31,7 +31,7 @@ const Page = () => {
     const response = await googleLogin(creds.credential);
     if (response.success) {
       toast.success("Google Login successful!");
-      router.push("/");
+      router.push("/dashboard");
     } else {
       toast.error(response.message);
     }
@@ -46,11 +46,15 @@ const Page = () => {
         </div>
 
         <h2 className="text-2xl font-bold text-center mb-2">Welcome Back!</h2>
-        <p className="text-zinc-400 text-center mb-8">Log in to access your insurance dashboard.</p>
+        <p className="text-zinc-400 text-center mb-8">
+          Log in to access your insurance dashboard.
+        </p>
 
         <div className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm text-zinc-400">Email or Phone Number</label>
+            <label className="text-sm text-zinc-400">
+              Email or Phone Number
+            </label>
             <input
               type="email"
               value={email}
@@ -114,7 +118,9 @@ const Page = () => {
               <div className="w-full border-t border-zinc-800"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 text-zinc-400 bg-black">or continue with</span>
+              <span className="px-2 text-zinc-400 bg-black">
+                or continue with
+              </span>
             </div>
           </div>
 
@@ -128,7 +134,7 @@ const Page = () => {
 
           <div className="text-center text-sm text-zinc-400">
             Don't have an account?{" "}
-            <Link 
+            <Link
               href="/signup"
               className="text-purple-500 hover:text-purple-400 font-medium transition-colors duration-300"
             >
