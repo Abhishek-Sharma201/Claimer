@@ -324,7 +324,7 @@ export default function DamageAssessment({
       try {
         const r = await fetch(`${apiURL}/api/claims/add`, {
           method: "POST",
-          body: result,
+          body: JOSN.stringify(result),
         });
         const res = await r.json();
 
