@@ -3,8 +3,8 @@
 import { Button } from "@/src/components/ui/button";
 import { motion } from "framer-motion";
 import { FileText, Sparkles } from "lucide-react";
-import { FloatingPaper } from "@/src/components/floating-paper";
-import { RoboAnimation } from "@/src/components/robo-animation";
+import { FloatingPaper } from "@/src/components/home/floating-paper";
+import { RoboAnimation } from "@/src/components/home/robo-animation";
 import { Badge } from "@/src/components/ui/badge";
 import { Bot, Menu } from "lucide-react";
 

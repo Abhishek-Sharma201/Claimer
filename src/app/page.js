@@ -1,6 +1,6 @@
-import Hero from "@/src/components/hero"
-import Navbar from "@/src/components/navbar"
-import Cards from "../components/cards"
+import Hero from "@/src/components/home/hero"
+import Navbar from "@/src/components/home/navbar"
+import Cards from "../components/home/cards"
 // import { SparklesCore } from "@/src/components/sparkles"
 
 export default function Home() {
