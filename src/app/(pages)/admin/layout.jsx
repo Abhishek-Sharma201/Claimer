@@ -1,5 +1,5 @@
 import "./style.css";
-import ClientLayout from "./clientLayout";
+import ClientLayout from "./admin-layout";
 
 export default function RootLayout({ children }) {
   return (
