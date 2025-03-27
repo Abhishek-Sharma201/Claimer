@@ -26,6 +26,7 @@ import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "../hooks/use-toast"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useAuth } from "../hooks/useAuth"
 
 export default function DamageAssessment({ userData, extractedData, verificationResult, onAssessmentComplete }) {
   const [damageImages, setDamageImages] = useState([])
@@ -41,6 +42,8 @@ export default function DamageAssessment({ userData, extractedData, verification
   const [assessmentRequired, setAssessmentRequired] = useState(true)
   const fileInputRef = useRef(null)
   const { toast } = useToast()
+
+const { user } = useAuth()
 
   // Load car image from localStorage
   useEffect(() => {
@@ -252,6 +255,7 @@ export default function DamageAssessment({ userData, extractedData, verification
       // Set assessment result
       const result = {
         ...data,
+        userId: user?._id,
         previewUrls: previewUrls,
         coverageAmount,
         timestamp: new Date().toISOString(),
@@ -283,6 +287,7 @@ export default function DamageAssessment({ userData, extractedData, verification
 
       // Store in localStorage
       localStorage.setItem("damageAssessmentResult", JSON.stringify(result))
+      console.log(result)
 
       // Show toast notification based on claim status
       if (data.isFakeImage) {
