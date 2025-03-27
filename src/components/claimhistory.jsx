@@ -17,6 +17,8 @@ const ClaimHistory = () => {
       });
       const data = await fe.json();
       setClaims(data.claims);
+      console.log(`Data : ${data}`);
+      console.log(`Claim history : ${claims}`);
       toast.success(data.message);
     } catch (error) {
       toast.error(data.message);
