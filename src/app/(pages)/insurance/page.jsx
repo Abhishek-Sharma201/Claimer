@@ -1,125 +1,146 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react';
-import Card from '@/src/components/insurance/card';
-import Filter from '@/src/components/insurance/filter';
-// import './App.css';
+import { Star } from 'lucide-react';
 
-const App = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const plansPerPage = 6;
+const insurancePlans = [
+  {
+    id: 1,
+    logo: "/images/image 6.jpg",
+    name: "HDFC Life Sanchay Plus",
+    features: [
+      "Comprehensive coverage",
+      "Tax benefits",
+      "Flexible payment options",
+      "24/7 support"
+    ],
+    price: "1299",
+    rating: 4
+  },
+  {
+    id: 2,
+    logo: "/images/image 8.jpg",
+    name: "Bajaj Allianz Life Goal Assure",
+    features: [
+      "No claim bonus",
+      "Cashless treatment",
+      "Wide hospital network",
+      "Quick settlement"
+    ],
+    price: "999",
+    rating: 4
+  },
+  {
+    id: 3,
+    logo: "/images/image 9.jpg",
+    name: "Axis Smart Wealth Plan",
+    features: [
+      "High sum assured",
+      "Critical illness cover",
+      "Low premium",
+      "Global coverage"
+    ],
+    price: "1499",
+    rating: 4
+  },
+  {
+    id: 4,
+    logo: "/images/image 10.jpg",
+    name: "SBI Life Smart Elite",
+    features: [
+      "Guaranteed benefits",
+      "Flexible premium payment",
+      "Loyalty additions",
+      "Tax-free maturity"
+    ],
+    price: "1399",
+    rating: 5
+  },
+  {
+    id: 5,
+    logo: "/images/image 11.jpg",
+    name: "ICICI Pru iProtect Smart",
+    features: [
+      "Terminal illness cover",
+      "Accidental death benefit",
+      "Affordable premium",
+      "Multiple payout options"
+    ],
+    price: "1099",
+    rating: 4
+  },
+  {
+    id: 6,
+    logo: "/images/260-2601857_step-lic-hand-logo-png.webp",
+    name: "LIC Jeevan Amar",
+    features: [
+      "Whole life coverage",
+      "Flexible policy term",
+      "Premium waiver",
+      "Death benefit options"
+    ],
+    price: "1599",
+    rating: 5
+  }
+];
 
-  const insurancePlans = [
-    {
-      title: 'Auto Premium',
-      rating: 5,
-      features: ['24/7 Roadside Assistance', 'Zero Depreciation Cover', 'Personal Accident Cover'],
-      price: 2990,
-    },
-    {
-      title: 'Home Shield Plus',
-      rating: 4,
-      features: ['Natural Disaster Coverage', 'Theft Protection', 'Property Damage'],
-      price: 1990,
-    },
-    {
-      title: 'Health Elite',
-      rating: 4,
-      features: ['Comprehensive Coverage', 'Global Treatment', 'Family Floater'],
-      price: 3390,
-    },
-    {
-      title: 'Travel Secure',
-      rating: 5,
-      features: ['Global Coverage', 'Emergency Medical', 'Trip Cancellation'],
-      price: 1490,
-    },
-    {
-      title: 'Life Assure',
-      rating: 5,
-      features: ['Term Life Coverage', 'Critical Illness', 'Investment Benefits'],
-      price: 4990,
-    },
-    {
-      title: 'Family Health Plus',
-      rating: 4,
-      features: ['Family Coverage', 'Maternity Benefits', 'Annual Check-ups'],
-      price: 5990,
-    },
-  ];
-
-  // Pagination logic
-  const indexOfLastPlan = currentPage * plansPerPage;
-  const indexOfFirstPlan = indexOfLastPlan - plansPerPage;
-  const currentPlans = insurancePlans.slice(indexOfFirstPlan, indexOfLastPlan);
-
-  const totalPages = Math.ceil(insurancePlans.length / plansPerPage);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center p-8">
-      {/* Header */}
-      <h1 className="text-4xl font-bold mb-2 animate-fadeIn">
-        Find the Best Insurance Plan for You
-      </h1>
-      <p className="text-gray-400 mb-6 animate-fadeIn">
-        Compare policies, customize your plan, and get insured instantly
-      </p>
-
-      {/* Filter Component */}
-      <Filter />
-
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        {currentPlans.map((plan, index) => (
-          <Card key={index} plan={plan} />
-        ))}
-      </div>
-
-      {/* Pagination */}
-      <div className="flex items-center mt-8 space-x-4">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="text-gray-400 hover:text-purple-500 transition-colors duration-300"
-        >
-          &lt;
-        </button>
-        {[...Array(totalPages)].map((_, i) => (
-          <button
-            key={i}
-            onClick={() => handlePageChange(i + 1)}
-            className={`px-4 py-2 rounded-full ${
-              currentPage === i + 1 ? 'bg-purple-600' : 'bg-gray-800'
-            } hover:bg-purple-500 transition-colors duration-300`}
-          >
-            {i + 1}
-          </button>
-        ))}
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="text-gray-400 hover:text-purple-500 transition-colors duration-300"
-        >
-          &gt;
-        </button>
-      </div>
-
-      {/* Footer Buttons */}
-      <div className="flex justify-between w-full max-w-4xl mt-12">
-        <button className="flex items-center space-x-2 text-gray-400 hover:text-purple-500 transition-colors duration-300">
-          <span className="text-2xl">🤖</span>
-          <span>Need Help? Our AI Assistant Can Guide You!</span>
-        </button>
-        <button className="bg-purple-600 px-6 py-3 rounded-full hover:bg-purple-700 transition-colors duration-300">
-          Secure Your Future Today
-        </button>
-      </div>
+const InsuranceCard = ({ plan }) => (
+  <div className="bg-zinc-900 rounded-xl p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20">
+    <div className="h-12 mb-4">
+      <img src={plan.logo} alt={plan.name} className="h-full object-contain invert" />
     </div>
-  );
-};
+    <h2 className="text-xl font-bold text-white mb-4">{plan.name}</h2>
+    <ul className="space-y-2 mb-6">
+      {plan.features.map((feature, index) => (
+        <li key={index} className="text-gray-400 flex items-center">
+          <span className="w-1.5 h-1.5 bg-purple-500 rounded-full mr-2"></span>
+          {feature}
+        </li>
+      ))}
+    </ul>
+    <div className="flex items-baseline mb-4">
+      <span className="text-3xl font-bold text-white">₹{plan.price}</span>
+      <span className="text-gray-400 ml-2">/month</span>
+    </div>
+    <div className="flex items-center mb-6">
+      {[...Array(5)].map((_, index) => (
+        <Star
+          key={index}
+          className={`w-5 h-5 ${
+            index < plan.rating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-600'
+          }`}
+        />
+      ))}
+    </div>
+    <button className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-purple-700 hover:shadow-lg hover:shadow-purple-500/50 active:scale-95">
+      View Details
+    </button>
+  </div>
+);
 
-export default App;
+export default function Home() {
+  return (
+    <main className="min-h-screen py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Choose Your Insurance Plan
+          </h1>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Compare our insurance plans and find the perfect coverage for your needs.
+            All plans come with 24/7 support and flexible payment options.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {insurancePlans.map(plan => (
+            <InsuranceCard key={plan.id} plan={plan} />
+          ))}
+        </div>
+
+        <footer className="mt-20 text-center text-gray-400">
+          <p>© 2025 BimaMarg. All rights reserved.</p>
+        </footer>
+      </div>
+    </main>
+  );
+}

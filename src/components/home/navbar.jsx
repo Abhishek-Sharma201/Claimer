@@ -19,7 +19,7 @@ export default function Navbar() {
 
       <div className="hidden md:flex rounded-full items-center space-x-4">
         <Link href="/login">
-          <Button variant="ghost" className="text-white rounded-full hover:text-purple-400">
+          <Button variant="ghost" className="text-white bg-purple-500 rounded-full hover:text-white">
             LogIn
           </Button>
         </Link>
@@ -32,7 +32,7 @@ export default function Navbar() {
 
       <div className="md:hidden flex space-x-2">
         <Link href="/login">
-          <Button variant="ghost" size="icon" className="rounded-8xl text-white">
+          <Button variant="ghost" size="icon" className="rounded-8xl text-purple-500">
           LogIn
           </Button>
         </Link>
