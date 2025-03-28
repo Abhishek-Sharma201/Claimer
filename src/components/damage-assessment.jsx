@@ -317,7 +317,7 @@ export default function DamageAssessment({
       setAssessmentResult(result);
       setAssessmentRequired(false);
 
-      // Store in localStorage
+      // Store in localStorag
       localStorage.setItem("damageAssessmentResult", JSON.stringify(result));
       console.log(`from-damage-assessment : ${result}`);
 
