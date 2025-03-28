@@ -1,38 +1,104 @@
-'use client'
+"use client";
 // components/AdminDashboard.jsx
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion'; // For animations
-import { FaSearch, FaBell, FaUserCircle, FaCheck, FaTimes } from 'react-icons/fa'; // Icons
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion"; // For animations
+import {
+  FaSearch,
+  FaBell,
+  FaUserCircle,
+  FaCheck,
+  FaTimes,
+} from "react-icons/fa"; // Icons
+import { useAuth } from "@/src/hooks/useAuth";
+import { toast } from "react-toastify";
+import { apiURL } from "@/src/constants";
 
 const AdminDashboard = () => {
-  const [claims, setClaims] = useState([
-    { id: 'CLM-001', customer: 'John Doe', type: 'Health', amount: '$1,200', status: 'PENDING' },
-    { id: 'CLM-002', customer: 'Jane Smith', type: 'Auto', amount: '$3,500', status: 'REVIEW' },
-    { id: 'CLM-003', customer: 'Mike Johnson', type: 'Property', amount: '$5,800', status: 'PENDING' },
-  ]);
+  // const [claims, setClaims] = useState([
+  //   { id: 'CLM-001', customer: 'John Doe', type: 'Health', amount: '$1,200', status: 'PENDING' },
+  //   { id: 'CLM-002', customer: 'Jane Smith', type: 'Auto', amount: '$3,500', status: 'REVIEW' },
+  //   { id: 'CLM-003', customer: 'Mike Johnson', type: 'Property', amount: '$5,800', status: 'PENDING' },
+  // ]);
 
-  const recentUsers = [
-    { name: 'Sarah Wilson', email: 'sarah.w@example.com' },
-    { name: 'Alex Thompson', email: 'alex.t@example.com' },
-    { name: 'Rachel Brown', email: 'rachel.b@example.com' },
-  ];
+  const { user } = useAuth();
+  const [claims, setClaims] = useState([]);
+  const [recentUsers, setRecentUsers] = useState([]);
+
+  const fetchClaimHistory = async () => {
+    try {
+      const response = await fetch(`${apiURL}/api/claims/get/${user._id}`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      setClaims(data.claims);
+      setRecentUsers(data.claims);
+      console.log("Data:", data);
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user._id) {
+      fetchClaimHistory();
+    }
+  }, [user]);
+
+  // const recentUsers = [
+  //   { name: "Sarah Wilson", email: "sarah.w@example.com" },
+  //   { name: "Alex Thompson", email: "alex.t@example.com" },
+  //   { name: "Rachel Brown", email: "rachel.b@example.com" },
+  // ];
 
   const fraudAlerts = [
-    { title: 'Multiple Claims', desc: 'User submitted 3 claims in 24 hours', time: '2 hours ago' },
-    { title: 'Suspicious Activity', desc: 'Unusual claim pattern detected', time: '5 hours ago' },
-    { title: 'Document Verification', desc: 'Potential forged documents', time: '1 day ago' },
+    {
+      title: "Multiple Claims",
+      desc: "User submitted 3 claims in 24 hours",
+      time: "2 hours ago",
+    },
+    {
+      title: "Suspicious Activity",
+      desc: "Unusual claim pattern detected",
+      time: "5 hours ago",
+    },
+    {
+      title: "Document Verification",
+      desc: "Potential forged documents",
+      time: "1 day ago",
+    },
   ];
 
   const policyUpdates = [
-    { title: 'Health Insurance Update', status: 'APPROVED', date: 'Jan 15, 2024' },
-    { title: 'Auto Coverage Changes', status: 'PENDING', date: 'Jan 14, 2024' },
-    { title: 'Property Policy Revision', status: 'In Review', date: 'Jan 13, 2024' },
+    {
+      title: "Health Insurance Update",
+      status: "APPROVED",
+      date: "Jan 15, 2024",
+    },
+    { title: "Auto Coverage Changes", status: "PENDING", date: "Jan 14, 2024" },
+    {
+      title: "Property Policy Revision",
+      status: "In Review",
+      date: "Jan 13, 2024",
+    },
   ];
 
   const notifications = [
-    { title: 'System Update', desc: 'New features available', time: '1 hour ago' },
-    { title: 'Team Meeting', desc: 'Review weekly progress', time: '3 hours ago' },
-    { title: 'Performance Report', desc: 'Monthly stats ready', time: '1 day ago' },
+    {
+      title: "System Update",
+      desc: "New features available",
+      time: "1 hour ago",
+    },
+    {
+      title: "Team Meeting",
+      desc: "Review weekly progress",
+      time: "3 hours ago",
+    },
+    {
+      title: "Performance Report",
+      desc: "Monthly stats ready",
+      time: "1 day ago",
+    },
   ];
 
   const handleAction = (id, action) => {
@@ -59,7 +125,9 @@ const AdminDashboard = () => {
           </div>
           <div className="relative">
             <FaBell className="text-xl" />
-            <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full px-1">2</span>
+            <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full px-1">
+              2
+            </span>
           </div>
           <div className="flex items-center space-x-2">
             <FaUserCircle className="text-2xl" />
@@ -93,34 +161,36 @@ const AdminDashboard = () => {
               <tbody>
                 {claims.map((claim) => (
                   <motion.tr
-                    key={claim.id}
+                    key={claim?._id}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
                     className="border-t border-gray-700 hover:bg-gray-700 transition duration-200"
                   >
-                    <td className="py-3">{claim.id}</td>
-                    <td>{claim.customer}</td>
-                    <td>{claim.type}</td>
-                    <td>{claim.amount}</td>
+                    <td className="py-3">{claim?._id}</td>
+                    <td>{claim?.name}</td>
+                    <td>{claim?.vehicleType}</td>
+                    <td>{claim?.coverageAmount}</td>
                     <td>
                       <span
                         className={`px-2 py-1 rounded text-xs ${
-                          claim.status === 'PENDING' ? 'bg-yellow-500' : 'bg-blue-500'
+                          claim?.claimStatus === "Pending"
+                            ? "bg-yellow-500"
+                            : "bg-blue-500"
                         }`}
                       >
-                        {claim.status}
+                        {claim?.claimStatus}
                       </span>
                     </td>
                     <td className="flex space-x-2">
                       <button
-                        onClick={() => handleAction(claim.id, 'approve')}
+                        onClick={() => handleAction(claim?._id, "approve")}
                         className="text-green-500 hover:text-green-400 transition duration-200"
                       >
                         <FaCheck />
                       </button>
                       <button
-                        onClick={() => handleAction(claim.id, 'reject')}
+                        onClick={() => handleAction(claim?._id, "reject")}
                         className="text-red-500 hover:text-red-400 transition duration-200"
                       >
                         <FaTimes />
@@ -137,7 +207,9 @@ const AdminDashboard = () => {
         <div className="bg-gray-800 rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Fraud Alerts</h2>
-            <span className="bg-red-500 text-xs rounded-full px-2 py-1">4 New</span>
+            <span className="bg-red-500 text-xs rounded-full px-2 py-1">
+              4 New
+            </span>
           </div>
           <div className="space-y-4">
             {fraudAlerts.map((alert, index) => (
@@ -163,7 +235,9 @@ const AdminDashboard = () => {
         <div className="bg-gray-800 rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Recent Users</h2>
-            <button className="text-purple-500 hover:underline">View All</button>
+            <button className="text-purple-500 hover:underline">
+              View All
+            </button>
           </div>
           <div className="space-y-4">
             {recentUsers.map((user, index) => (
@@ -176,8 +250,8 @@ const AdminDashboard = () => {
               >
                 <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
                 <div>
-                  <p className="font-semibold">{user.name}</p>
-                  <p className="text-gray-400 text-sm">{user.email}</p>
+                  <p className="font-semibold">{user?.name}</p>
+                  <p className="text-gray-400 text-sm">{user?.email}</p>
                 </div>
               </motion.div>
             ))}
@@ -188,7 +262,9 @@ const AdminDashboard = () => {
         <div className="bg-gray-800 rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Policy Updates</h2>
-            <button className="text-purple-500 hover:underline">View All</button>
+            <button className="text-purple-500 hover:underline">
+              View All
+            </button>
           </div>
           <div className="space-y-4">
             {policyUpdates.map((policy, index) => (
@@ -202,7 +278,9 @@ const AdminDashboard = () => {
                 <h3 className="font-semibold">{policy.title}</h3>
                 <p
                   className={`text-sm ${
-                    policy.status === 'APPROVED' ? 'text-green-500' : 'text-yellow-500'
+                    policy.status === "APPROVED"
+                      ? "text-green-500"
+                      : "text-yellow-500"
                   }`}
                 >
                   {policy.status}
@@ -217,7 +295,9 @@ const AdminDashboard = () => {
         <div className="bg-gray-800 rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Notifications</h2>
-            <span className="bg-red-500 text-xs rounded-full px-2 py-1">5 New</span>
+            <span className="bg-red-500 text-xs rounded-full px-2 py-1">
+              5 New
+            </span>
           </div>
           <div className="space-y-4">
             {notifications.map((notification, index) => (
