@@ -29,6 +29,7 @@
     "formidable": "^3.5.2",
     "framer-motion": "^12.6.2",
     "jsonwebtoken": "^9.0.2",
+    "leva": "^0.10.0",
     "lucide-react": "^0.484.0",
     "mindee": "^4.24.0",
     "next": "^14.2.24",
@@ -43,7 +44,12 @@
     "shadcn": "^2.4.0-canary.17",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
-    "tesseract.js": "^6.0.0"
+    "tesseract.js": "^6.0.0",
+    "three": "^0.174.0",
+    "@react-spring/three": "^9.5.5",
+    "@react-spring/web": "^9.7.5",
+    "@react-three/drei": "^9.121.4",
+    "@react-three/fiber": "^8.13.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

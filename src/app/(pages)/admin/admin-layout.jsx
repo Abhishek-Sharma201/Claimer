@@ -96,7 +96,7 @@ export default function AdminLayout({ children }) {
       >
         <header className="sticky top-0 z-10 flex justify-between items-center px-6 py-3 bg-[#111111] border-b border-[#2a2a2a]">
           <div className="flex items-center gap-4">
-            <Link href="/admin/dashboard">
+            <Link href="/admin">
               <motion.h1
                 className="logo cursor-pointer text-xl font-bold"
                 whileHover={{ scale: 1.05 }}

@@ -475,7 +475,7 @@ export default function InsuranceApp() {
                     variant="outline"
                     size="sm"
                     onClick={resetApplication}
-                    className="text-white border-[#333333] hover:bg-[#1a1a1a]"
+                    className="text-blue-600 text-lg border-[#333333] hover:bg-[#1a1a1a]"
                   >
                     Reset
                   </Button>

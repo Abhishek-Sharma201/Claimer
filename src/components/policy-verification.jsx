@@ -136,7 +136,7 @@ export default function PolicyVerification({ onPolicyVerified }) {
                     placeholder="e.g. POL-8901-2345-2223"
                     value={policyNumber}
                     onChange={handlePolicyNumberChange}
-                    className="text-base py-6 bg-muted border-gray-700 text-white"
+                    className="text-base py-6 bg-muted border-gray-700 text-white bg-black"
                   />
                   <Button
                     type="submit"
@@ -163,21 +163,7 @@ export default function PolicyVerification({ onPolicyVerified }) {
               )}
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col justify-center text-sm text-muted-foreground space-y-3 bg-muted/20 border-t border-gray-700 py-4">
-            <p>For testing, use these policy numbers:</p>
-            <div className="flex space-x-4">
-              <div className="flex items-center space-x-2 bg-background p-2 rounded-md border border-gray-700">
-                <Car className="h-4 w-4 text-primary" />
-                <span className="font-mono text-white">123</span>
-                <span className="text-xs text-gray-400">Car Insurance</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-background p-2 rounded-md border border-gray-700">
-                <Home className="h-4 w-4 text-primary" />
-                <span className="font-mono text-white">456</span>
-                <span className="text-xs text-gray-400">Home Insurance</span>
-              </div>
-            </div>
-          </CardFooter>
+         
         </Card>
       </div>
     </div>
