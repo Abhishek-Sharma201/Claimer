@@ -319,12 +319,13 @@ export default function DamageAssessment({
 
       // Store in localStorage
       localStorage.setItem("damageAssessmentResult", JSON.stringify(result));
-      console.log(result);
+      console.log(`from-damage-assessment : ${result}`);
 
       try {
         const r = await fetch(`${apiURL}/api/claims/add`, {
+          headers: { "Content-Type": "application/json" },
           method: "POST",
-          body: JSON.stringify(result),
+          body: result,
         });
         const res = await r.json();
 
