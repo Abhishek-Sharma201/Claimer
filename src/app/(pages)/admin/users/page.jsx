@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { apiURL } from "@/src/constants";
+import Image from "next/image";
 
 // Sample data for demonstration
 // const initialUsers = [
@@ -326,9 +327,18 @@ export default function UserManagement() {
                       className="border-b border-[#2A2A33] hover:bg-[#23232B]"
                     >
                       <td className="py-3 px-4 flex items-center">
-                        <div className="h-8 w-8 rounded-full bg-[#6B46C1] flex items-center justify-center mr-2">
-                          <User className="h-4 w-4 text-white" />
-                        </div>
+                        {user?.picture ? (
+                          <Image
+                            src={user?.picture || ""}
+                            alt="pic"
+                            className=" h-8 w-8 rounded-full object-contain "
+                          />
+                        ) : (
+                          <div className="h-8 w-8 rounded-full bg-[#6B46C1] flex items-center justify-center mr-2">
+                            <User className="h-4 w-4 text-white" />
+                          </div>
+                        )}
+
                         {user?.name}
                       </td>
                       <td className="py-3 px-4">{user?.email}</td>

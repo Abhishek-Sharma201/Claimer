@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { useState } from "react";
+import { useState } from "react"
 import {
   Search,
   Calendar,
@@ -13,7 +13,7 @@ import {
   Eye,
   Check,
   Download,
-} from "lucide-react";
+} from "lucide-react"
 
 // Sample data for demonstration
 const initialClaims = [
@@ -57,27 +57,27 @@ const initialClaims = [
       { name: "Property Damage Report.pdf", url: "#" },
     ],
   },
-];
+]
 
 export default function ClaimsManagementAllInOne() {
-  const [claims] = useState(initialClaims);
-  const [selectedClaim, setSelectedClaim] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [claims] = useState(initialClaims)
+  const [selectedClaim, setSelectedClaim] = useState(null)
+  const [searchQuery, setSearchQuery] = useState("")
 
   const filteredClaims = claims.filter(
     (claim) =>
       claim.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       claim.policyholder.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      claim.insuranceType.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+      claim.insuranceType.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
 
   const handleClaimSelect = (claim) => {
-    setSelectedClaim(claim);
-  };
+    setSelectedClaim(claim)
+  }
 
   const handleCloseDetails = () => {
-    setSelectedClaim(null);
-  };
+    setSelectedClaim(null)
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-[#121218] text-white">
@@ -135,10 +135,7 @@ export default function ClaimsManagementAllInOne() {
           {/* Search and Filters */}
           <div className="flex flex-wrap gap-4 mb-6">
             <div className="relative flex-grow max-w-md">
-              <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={18}
-              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
               <input
                 className="pl-10 bg-[#1E1E24] border border-[#2A2A33] text-white h-10 rounded-md w-full px-3"
                 placeholder="Search claims..."
@@ -185,26 +182,18 @@ export default function ClaimsManagementAllInOne() {
                     onClick={() => handleClaimSelect(claim)}
                   >
                     <td className="py-4 px-4 text-white">{claim.id}</td>
-                    <td className="py-4 px-4 text-white">
-                      {claim.policyholder}
-                    </td>
-                    <td className="py-4 px-4 text-white">
-                      {claim.insuranceType}
-                    </td>
-                    <td className="py-4 px-4 text-white">
-                      ${claim.amount.toLocaleString()}
-                    </td>
-                    <td className="py-4 px-4 text-white">
-                      {claim.submissionDate}
-                    </td>
+                    <td className="py-4 px-4 text-white">{claim.policyholder}</td>
+                    <td className="py-4 px-4 text-white">{claim.insuranceType}</td>
+                    <td className="py-4 px-4 text-white">${claim.amount.toLocaleString()}</td>
+                    <td className="py-4 px-4 text-white">{claim.submissionDate}</td>
                     <td className="py-4 px-4">
                       <span
                         className={`px-3 py-1 rounded-full text-sm ${
                           claim.status === "Approved"
                             ? "bg-[#0D3320] text-[#34A853]"
                             : claim.status === "Pending"
-                            ? "bg-[#3D2E05] text-[#F9A825]"
-                            : "bg-[#3D1513] text-[#EA4335]"
+                              ? "bg-[#3D2E05] text-[#F9A825]"
+                              : "bg-[#3D1513] text-[#EA4335]"
                         }`}
                       >
                         {claim.status}
@@ -246,9 +235,7 @@ export default function ClaimsManagementAllInOne() {
 
               {/* Basic Information */}
               <div className="mb-8 bg-[#23232B] rounded-lg p-4">
-                <h3 className="text-lg font-semibold mb-4 text-white">
-                  Basic Information
-                </h3>
+                <h3 className="text-lg font-semibold mb-4 text-white">Basic Information</h3>
 
                 <div className="space-y-4">
                   <div>
@@ -268,48 +255,34 @@ export default function ClaimsManagementAllInOne() {
 
                   <div>
                     <p className="text-gray-400 text-sm">Amount</p>
-                    <p className="text-white">
-                      ${selectedClaim.amount.toLocaleString()}
-                    </p>
+                    <p className="text-white">${selectedClaim.amount.toLocaleString()}</p>
                   </div>
                 </div>
               </div>
 
               {/* AI Analysis */}
               <div className="mb-8 bg-[#23232B] rounded-lg p-4">
-                <h3 className="text-lg font-semibold mb-4 text-white">
-                  AI Analysis
-                </h3>
+                <h3 className="text-lg font-semibold mb-4 text-white">AI Analysis</h3>
 
                 <div className="bg-[#1A2151] rounded-lg p-4">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-[#6B46C1]">
-                      Auto-Approval Suggested
-                    </span>
-                    <span className="text-[#805AD5] font-bold">
-                      {selectedClaim.aiConfidence}%
-                    </span>
+                    <span className="text-[#6B46C1]">Auto-Approval Suggested</span>
+                    <span className="text-[#805AD5] font-bold">{selectedClaim.aiConfidence}%</span>
                   </div>
 
                   <p className="text-sm text-gray-300">
-                    Based on historical data and claim patterns, this claim has
-                    a high probability of being legitimate.
+                    Based on historical data and claim patterns, this claim has a high probability of being legitimate.
                   </p>
                 </div>
               </div>
 
               {/* Documents */}
               <div className="bg-[#23232B] rounded-lg p-4">
-                <h3 className="text-lg font-semibold mb-4 text-white">
-                  Documents
-                </h3>
+                <h3 className="text-lg font-semibold mb-4 text-white">Documents</h3>
 
                 <div className="space-y-3">
                   {selectedClaim.documents.map((doc, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center p-3 bg-[#1E1E24] rounded-lg"
-                    >
+                    <div key={index} className="flex justify-between items-center p-3 bg-[#1E1E24] rounded-lg">
                       <span className="text-white">{doc.name}</span>
                       <button className="text-[#6B46C1] hover:text-[#805AD5] h-8 w-8 flex items-center justify-center">
                         <Download size={18} />
@@ -323,5 +296,6 @@ export default function ClaimsManagementAllInOne() {
         )}
       </div>
     </div>
-  );
+  )
 }
+
