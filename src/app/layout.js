@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider clientId={"826677420756-fi5gqlscoke2klbki3q2o6e0fft77e9u.apps.googleusercontent.com"}>
       <html lang="en">
         <body className={`antialiased`}>
           {children}
