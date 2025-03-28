@@ -318,13 +318,13 @@ export default function ClaimStatus() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-white border-[#333333] hover:bg-[#1a1a1a]"
+                  className="text-blue-700 border-[#333333] hover:bg-[#1a1a1a]"
                   onClick={handlePrintClaim}
                 >
                   <Printer className="h-4 w-4 mr-2" />
                   Print
                 </Button>
-                <Button variant="outline" size="sm" className="text-white border-[#333333] hover:bg-[#1a1a1a]">
+                <Button variant="outline" size="sm" className="text-blue-700 border-[#333333] hover:bg-[#1a1a1a]">
                   <Download className="h-4 w-4 mr-2" />
                   Download PDF
                 </Button>
