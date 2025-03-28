@@ -14,6 +14,8 @@ import {
   Check,
   X,
 } from "lucide-react";
+import { toast } from "react-toastify";
+import { apiURL } from "@/src/constants";
 
 // Sample data for demonstration
 // const initialUsers = [
@@ -101,13 +103,32 @@ import {
 
 export default function UserManagement() {
   const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState(initialUsers);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [filterType, setFilterType] = useState("All");
   const [loading, setLoading] = useState(false);
+
+  const fetchUsers = async () => {
+    try {
+      const r = await fetch(`${apiURL}/api/claims/getUsers`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const res = await r.json();
+
+      setUsers(res.users);
+      setFilteredUsers(res.users);
+    } catch (error) {
+      toast.error(res.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  });
 
   // Filter users based on search query and filter type
   // useEffect(() => {
