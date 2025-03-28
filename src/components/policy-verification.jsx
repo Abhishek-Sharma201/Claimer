@@ -2,11 +2,19 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Search, ShieldCheck, Home, Car } from 'lucide-react';
+import { Loader2, Search, ShieldCheck, Home, Car } from "lucide-react";
+import { apiURL } from "../constants";
 
 export default function PolicyVerification({ onPolicyVerified }) {
   const [policyNumber, setPolicyNumber] = useState("");
@@ -20,7 +28,7 @@ export default function PolicyVerification({ onPolicyVerified }) {
 
   const verifyPolicyNumber = async (e) => {
     e.preventDefault();
-    
+
     if (!policyNumber.trim()) {
       setPolicyError("Please enter a policy number");
       return;
@@ -28,7 +36,7 @@ export default function PolicyVerification({ onPolicyVerified }) {
 
     setIsPolicyVerifying(true);
     setPolicyError(null);
-    
+
     try {
       // Bypass options for testing
       if (policyNumber === "123") {
@@ -40,20 +48,20 @@ export default function PolicyVerification({ onPolicyVerified }) {
           policyNumber: "123",
           policyType: "Car",
           phone: "9876543210",
-          dob: "01-01-2000"
+          dob: "01-01-2000",
         };
-        
+
         // Store mock user data in localStorage
         localStorage.setItem("insuranceUserData", JSON.stringify(mockUserData));
         console.log("Test user data saved (Car):", mockUserData);
-        
+
         // Notify parent component
         onPolicyVerified(mockUserData);
-        
+
         setIsPolicyVerifying(false);
         return;
       }
-      
+
       if (policyNumber === "456") {
         // Create mock user data for home insurance testing
         const mockUserData = {
@@ -63,30 +71,30 @@ export default function PolicyVerification({ onPolicyVerified }) {
           policyNumber: "456",
           policyType: "Home",
           phone: "9876543210",
-          dob: "01-01-2000"
+          dob: "01-01-2000",
         };
-        
+
         // Store mock user data in localStorage
         localStorage.setItem("insuranceUserData", JSON.stringify(mockUserData));
         console.log("Test user data saved (Home):", mockUserData);
-        
+
         // Notify parent component
         onPolicyVerified(mockUserData);
-        
+
         setIsPolicyVerifying(false);
         return;
       }
-      
+
       // Normal API verification for other policy numbers
-      const response = await fetch(`https://chm-hackverse-2025.onrender.com/api/policy/get/${policyNumber}`);
+      const response = await fetch(`${apiURL}/api/policy/get/${policyNumber}`);
       const data = await response.json();
-      
+
       if (data.success) {
         // Policy found
         // Store user data in localStorage
         localStorage.setItem("insuranceUserData", JSON.stringify(data.user));
         console.log("User data saved:", data.user);
-        
+
         // Notify parent component
         onPolicyVerified(data.user);
       } else {
@@ -109,7 +117,9 @@ export default function PolicyVerification({ onPolicyVerified }) {
             <div className="mx-auto bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
               <ShieldCheck className="h-8 w-8 text-primary" />
             </div>
-            <CardTitle className="text-2xl text-white">Insurance Policy Verification</CardTitle>
+            <CardTitle className="text-2xl text-white">
+              Insurance Policy Verification
+            </CardTitle>
             <CardDescription className="text-base text-gray-300">
               Enter your policy number to proceed with document extraction
             </CardDescription>
@@ -117,7 +127,9 @@ export default function PolicyVerification({ onPolicyVerified }) {
           <CardContent className="pt-6">
             <form onSubmit={verifyPolicyNumber} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="policyNumber" className="text-base">Policy Number</Label>
+                <Label htmlFor="policyNumber" className="text-base">
+                  Policy Number
+                </Label>
                 <div className="flex space-x-2">
                   <Input
                     id="policyNumber"
@@ -126,20 +138,24 @@ export default function PolicyVerification({ onPolicyVerified }) {
                     onChange={handlePolicyNumberChange}
                     className="text-base py-6 bg-muted border-gray-700 text-white"
                   />
-                  <Button 
-                    type="submit" 
-                    disabled={isPolicyVerifying} 
-                    size="icon" 
+                  <Button
+                    type="submit"
+                    disabled={isPolicyVerifying}
+                    size="icon"
                     className="h-auto bg-primary hover:bg-primary/80 text-white"
                   >
-                    {isPolicyVerifying ? <Loader2 className="h-5 w-5 animate-spin" /> : <Search className="h-5 w-5" />}
+                    {isPolicyVerifying ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <Search className="h-5 w-5" />
+                    )}
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
                   Enter the policy number provided in your insurance document
                 </p>
               </div>
-              
+
               {policyError && (
                 <Alert variant="destructive">
                   <AlertDescription>{policyError}</AlertDescription>
