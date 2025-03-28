@@ -33,7 +33,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Badge variant="purple" className="mb-6 p-3 text-white">
+            <Badge variant="purple" className="mb-6 p-3 rounded-3xl text-[17px] text-white">
             <Bot className="w-8 h-8 text-purple-500" />Cipher Squad Present
             </Badge>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">

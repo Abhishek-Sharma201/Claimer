@@ -20,27 +20,27 @@ export default function Navbar() {
       <div className="hidden md:flex rounded-full items-center space-x-4">
         <Link href="/login">
           <Button variant="ghost" className="text-white rounded-full hover:text-purple-400">
-            Sign In
+            LogIn
           </Button>
         </Link>
-        <Link href="/signup">
+        {/* <Link href="/signup">
           <Button className="bg-purple-600 rounded-8xl hover:bg-purple-700 text-white">
             Sign Up
           </Button>
-        </Link>
+        </Link> */}
       </div>
 
       <div className="md:hidden flex space-x-2">
         <Link href="/login">
           <Button variant="ghost" size="icon" className="rounded-8xl text-white">
-            Sign In
+          LogIn
           </Button>
         </Link>
-        <Link href="/signup">
+        {/* <Link href="/signup">
           <Button variant="ghost" size="icon" className="bg-purple-600 hover:bg-purple-700 text-white">
             Sign Up
           </Button>
-        </Link>
+        </Link> */}
       </div>
     </motion.nav>
   );
