@@ -347,14 +347,14 @@ export default function CarVerification({ userData, extractedData, onVerificatio
           <CardFooter className="flex justify-end border-t border-[#333333] bg-[#1a1a1a] py-4">
             <Button
               variant={verificationResult?.isMatch ? "default" : "outline"}
-              onClick={() => onVerificationComplete(verificationResult || { skipped: true })}
+              onClick={() => onVerificationComplete(verificationResult)}
               className={
                 verificationResult?.isMatch
                   ? "bg-[#00FFFF] hover:bg-[#00CCCC] text-black font-medium"
-                  : "text-white border-[#333333] hover:bg-[#1a1a1a]"
+                  : "text-blue-600 border-[#333333] hover:bg-[#1a1a1a]"
               }
             >
-              {verificationResult?.isMatch ? "Continue" : "Skip Verification"}
+              {verificationResult?.isMatch ? "Continue" : " Verification"}
             </Button>
           </CardFooter>
         </Card>

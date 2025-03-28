@@ -45,6 +45,12 @@ const navigationItems = [
     link: "/dashboard/claim-history",
   },
   {
+    name: "Blockchain Document",
+    icon: "mdi:history",
+    color: "#6B46C1",
+    link: "/dashboard/blockchain-ai",
+  },
+  {
     name: "AI Assistant",
     icon: "mdi:robot-outline",
     color: "#6B46C1",
