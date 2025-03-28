@@ -72,7 +72,7 @@ const Page = () => {
       <div className="w-full max-w-md bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-8 shadow-2xl border border-zinc-800">
         <div className="flex items-center justify-center gap-2 mb-8">
           <Bot className="w-8 h-8 text-purple-500" />
-          <h1 className="text-2xl font-bold">BimaMarg</h1>
+          <h1 className="text-2xl font-bold">DigiClaim.ai</h1>
         </div>
 
         <h2 className="text-2xl font-bold text-center mb-2">Sign Up</h2>

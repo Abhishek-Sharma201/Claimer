@@ -41,7 +41,7 @@ const Page = () => {
       <div className="w-full max-w-md bg-[#111111]/90 backdrop-blur-xl rounded-3xl p-8 shadow-2xl">
         <div className="flex items-center justify-center mt-[-20px] gap-2 mb-2">
           <Bot className="w-8 h-8 text-purple-500" />
-          <h1 className="text-2xl text-white font-bold">BimaMarg</h1>
+          <h1 className="text-2xl text-white font-bold">DigiClaim.ai</h1>
         </div>
         <h1 className="text-4xl font-bold text-white text-center mb-8">
           Welcome Back!
@@ -96,7 +96,7 @@ const Page = () => {
             className="w-full bg-[#5b43ff] hover:bg-[#4935cc] text-white font-medium py-3 rounded-xl
               transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
           >
-            Log In
+            Login
           </button>
 
           <div className="mt-8">
