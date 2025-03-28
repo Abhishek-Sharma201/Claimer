@@ -1,31 +1,52 @@
 // pages/index.jsx
-'use client'
+"use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion'; // For animations
+import React, { useState } from "react";
+import { motion } from "framer-motion"; // For animations
 
 // Install framer-motion if not already installed: npm install framer-motion
 
 export default function Home() {
   const [claims] = useState([
-    { id: 'CLM-2024-001', type: 'Auto Insurance', status: 'Processing', amount: '₹32,500', date: 'Jan 15, 2024' },
-    { id: 'CLM-2024-002', type: 'Health Insurance', status: 'Approved', amount: '₹21,800', date: 'Jan 12, 2024' },
-    { id: 'CLM-2024-003', type: 'Home Insurance', status: 'Rejected', amount: '₹55,000', date: 'Jan 10, 2024' },
+    {
+      id: "CLM-2024-001",
+      type: "Auto Insurance",
+      status: "Processing",
+      amount: "₹32,500",
+      date: "Jan 15, 2024",
+    },
+    {
+      id: "CLM-2024-002",
+      type: "Health Insurance",
+      status: "Approved",
+      amount: "₹21,800",
+      date: "Jan 12, 2024",
+    },
+    {
+      id: "CLM-2024-003",
+      type: "Home Insurance",
+      status: "Rejected",
+      amount: "₹55,000",
+      date: "Jan 10, 2024",
+    },
   ]);
 
   const [documents] = useState([
-    { name: 'Policy Document', size: '2.5 MB' },
-    { name: 'Claim Report', size: '1.8 MB' },
-    { name: 'Medical Records', size: '3.2 MB' },
-    { name: 'Vehicle Report', size: '1.5 MB' },
-    { name: 'Insurance Card', size: '0.5 MB' },
-    { name: 'Receipts', size: '2.1 MB' },
+    { name: "Policy Document", size: "2.5 MB" },
+    { name: "Claim Report", size: "1.8 MB" },
+    { name: "Medical Records", size: "3.2 MB" },
+    { name: "Vehicle Report", size: "1.5 MB" },
+    { name: "Insurance Card", size: "0.5 MB" },
+    { name: "Receipts", size: "2.1 MB" },
   ]);
 
   const [notifications] = useState([
-    { message: 'Your claim CLM-2024-001 has been approved', time: '2 hours ago' },
-    { message: 'Medical records have been verified', time: '5 hours ago' },
-    { message: 'Your next premium payment is due soon', time: '1 day ago' },
+    {
+      message: "Your claim CLM-2024-001 has been approved",
+      time: "2 hours ago",
+    },
+    { message: "Medical records have been verified", time: "5 hours ago" },
+    { message: "Your next premium payment is due soon", time: "1 day ago" },
   ]);
 
   return (
@@ -65,21 +86,42 @@ export default function Home() {
             <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: '➕', title: 'New Claim', desc: 'Start a new claim process' },
-                { icon: '⏳', title: 'Track Claim', desc: 'Check existing claim status' },
-                { icon: '🔧', title: 'Find Repair', desc: 'Locate certified partners' },
-                { icon: '🎧', title: 'Contact Support', desc: 'Get help with your claim' },
+                {
+                  icon: "➕",
+                  title: "New Claim",
+                  desc: "Start a new claim process",
+                  link: "/dashboard/claim-submission",
+                },
+                {
+                  icon: "⏳",
+                  title: "Track Claim",
+                  desc: "Check existing claim status",
+                  link: "/dashboard/claim-status",
+                },
+                {
+                  icon: "🔧",
+                  title: "Find Repair",
+                  desc: "Locate certified partners",
+                  link: "/dashboard/repair-partners",
+                },
+                {
+                  icon: "🎧",
+                  title: "Contact Support",
+                  desc: "Get help with your claim",
+                  link: "/dashboard/support",
+                },
               ].map((action, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700 transition-all duration-300"
-                >
-                  <div className="text-2xl mb-2">{action.icon}</div>
-                  <h3 className="text-md font-semibold">{action.title}</h3>
-                  <p className="text-sm text-gray-400">{action.desc}</p>
-                </motion.div>
+                <a key={index} href={action.link} className="block">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700 transition-all duration-300"
+                  >
+                    <div className="text-2xl mb-2">{action.icon}</div>
+                    <h3 className="text-md font-semibold">{action.title}</h3>
+                    <p className="text-sm text-gray-400">{action.desc}</p>
+                  </motion.div>
+                </a>
               ))}
             </div>
           </div>
@@ -96,7 +138,11 @@ export default function Home() {
                 >
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center">
-                      {claim.type.includes('Auto') ? '🚗' : claim.type.includes('Health') ? '🏥' : '🏠'}
+                      {claim.type.includes("Auto")
+                        ? "🚗"
+                        : claim.type.includes("Health")
+                        ? "🏥"
+                        : "🏠"}
                     </div>
                     <div>
                       <p className="text-sm font-semibold">{claim.id}</p>
@@ -108,11 +154,11 @@ export default function Home() {
                     <p className="text-xs text-gray-400">{claim.date}</p>
                     <span
                       className={`text-xs px-2 py-1 rounded-full ${
-                        claim.status === 'Approved'
-                          ? 'bg-green-500'
-                          : claim.status === 'Rejected'
-                          ? 'bg-red-500'
-                          : 'bg-yellow-500'
+                        claim.status === "Approved"
+                          ? "bg-green-500"
+                          : claim.status === "Rejected"
+                          ? "bg-red-500"
+                          : "bg-yellow-500"
                       }`}
                     >
                       {claim.status}
@@ -155,7 +201,9 @@ export default function Home() {
                 <span>⚠️</span>
                 <p className="text-sm font-semibold">Fraud Alert</p>
               </div>
-              <p className="text-xs text-gray-400">Unusual pattern detected in recent claim</p>
+              <p className="text-xs text-gray-400">
+                Unusual pattern detected in recent claim
+              </p>
             </motion.div>
             <motion.div
               whileHover={{ scale: 1.02 }}
@@ -165,7 +213,9 @@ export default function Home() {
                 <span>📈</span>
                 <p className="text-sm font-semibold">Claim Prediction</p>
               </div>
-              <p className="text-xs text-gray-400">Your policy renewal is due in 15 days</p>
+              <p className="text-xs text-gray-400">
+                Your policy renewal is due in 15 days
+              </p>
             </motion.div>
           </div>
 
