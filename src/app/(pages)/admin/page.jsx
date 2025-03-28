@@ -12,6 +12,7 @@ import {
 import { useAuth } from "@/src/hooks/useAuth";
 import { toast } from "react-toastify";
 import { apiURL } from "@/src/constants";
+import Image from "next/image";
 
 const AdminDashboard = () => {
   // const [claims, setClaims] = useState([
@@ -168,7 +169,7 @@ const AdminDashboard = () => {
                     className="border-t border-gray-700 hover:bg-gray-700 transition duration-200"
                   >
                     <td className="py-3">{claim?._id}</td>
-                    <td>{claim?.name}</td>
+                    <td>{claim?.userId?.name}</td>
                     <td>{claim?.vehicleType}</td>
                     <td>{claim?.coverageAmount}</td>
                     <td>
@@ -248,10 +249,14 @@ const AdminDashboard = () => {
                 transition={{ delay: index * 0.2, duration: 0.5 }}
                 className="flex items-center space-x-4 hover:bg-gray-700 p-2 rounded transition duration-200"
               >
-                <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
+                <Image
+                  src={user?.imageUrls[0] || ""}
+                  className="w-10 h-10 rounded-full"
+                  alt="pic"
+                />
                 <div>
-                  <p className="font-semibold">{user?.name}</p>
-                  <p className="text-gray-400 text-sm">{user?.email}</p>
+                  <p className="font-semibold">{user?.userId?.name}</p>
+                  <p className="text-gray-400 text-sm">{user?.userId?.email}</p>
                 </div>
               </motion.div>
             ))}
