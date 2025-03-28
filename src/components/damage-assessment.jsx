@@ -334,7 +334,7 @@ export default function DamageAssessment({
         t.error(error.message);
       }
 
-      // Show toast notification based on claim status
+      // Show toast notification based on claim STATUS
       if (data.isFakeImage) {
         toast({
           title: "Fake Image Detected",
