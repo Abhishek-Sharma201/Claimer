@@ -331,7 +331,7 @@ export default function DamageAssessment({
 
         if (res.success) t.success(res.success);
       } catch (error) {
-        t.error(error.message);
+        // t.error(error.message);
       }
 
       // Show toast notification based on claim STATUS
