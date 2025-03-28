@@ -685,7 +685,7 @@ export default function HomeDamageAssessment({
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="w-full mt-2 border-[#333333] text-white hover:bg-[#1a1a1a]"
+                    className="w-full mt-2 border-[#333333] text-blue-600  hover:bg-[#1a1a1a] "
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <Plus className="h-4 w-4 mr-2" />

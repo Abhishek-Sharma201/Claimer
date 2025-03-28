@@ -24,7 +24,7 @@ export default function HomeVerification({ userData, extractedData, onVerificati
   };
 
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="container mx-auto py-6 px-4 ">
       <div className="max-w-3xl mx-auto">
         <Card className="shadow-lg border-primary/10">
           <CardHeader className="bg-primary/10 border-b">
@@ -49,8 +49,8 @@ export default function HomeVerification({ userData, extractedData, onVerificati
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-muted p-4 rounded-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+              <div className=" p-4 rounded-lg ">
                 <div className="flex items-center mb-3">
                   <Building className="h-5 w-5 mr-2 text-primary/70" />
                   <h3 className="text-sm font-medium">Property Details</h3>
@@ -83,7 +83,7 @@ export default function HomeVerification({ userData, extractedData, onVerificati
                 </div>
               </div>
               
-              <div className="bg-muted p-4 rounded-lg">
+              <div className=" p-4 rounded-lg">
                 <div className="flex items-center mb-3">
                   <MapPin className="h-5 w-5 mr-2 text-primary/70" />
                   <h3 className="text-sm font-medium">Location & Coverage</h3>
@@ -114,7 +114,7 @@ export default function HomeVerification({ userData, extractedData, onVerificati
               </div>
             </div>
             
-            <div className="bg-muted p-4 rounded-lg">
+            <div className="p-4 rounded-lg">
               <h3 className="text-sm font-medium mb-3">Coverage Includes</h3>
               <div className="flex flex-wrap gap-2">
                 {extractedData?.coverageIncludes && extractedData.coverageIncludes.length > 0 ? (
